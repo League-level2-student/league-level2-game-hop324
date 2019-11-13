@@ -1,5 +1,5 @@
 package Deadlocked;
 
-public class Enemy {
+public class Enemy extends Deadlocked{
 
 }
