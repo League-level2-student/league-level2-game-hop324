@@ -72,65 +72,106 @@ public static void main(String [] args) {
 }
 @Override
 public void actionPerformed(ActionEvent e) {
-	System.out.println("Ayayyaya");
-	player.setBackground(Color.white);
 	if(e.getSource() == movableUp) {
+		for(int i = 0; i < 45; i++) {
+			tiles[i].setBackground(Color.white);
+		}
+		System.out.println("Up");
 		player = movableUp;
 		player.setBackground(Color.cyan);
 		player.setBorderPainted(false);
 		player.setOpaque(true);
 		getPlayerPosition(player, position-9);
+		getMovableSpaces(position);
 	}
 	else if(e.getSource() == movableDown) {
+		for(int i = 0; i < 45; i++) {
+			tiles[i].setBackground(Color.white);
+		}
+		System.out.println("Down");
 		player = movableDown;
 		player.setBackground(Color.cyan);
 		player.setBorderPainted(false);
 		player.setOpaque(true);
 		getPlayerPosition(player, position+9);
+		getMovableSpaces(position);
 	}
 	else if(e.getSource() == movableLeft) {
+		for(int i = 0; i < 45; i++) {
+			tiles[i].setBackground(Color.white);
+		}
+		System.out.println("Left");
 		player = movableLeft;
 		player.setBackground(Color.cyan);
 		player.setBorderPainted(false);
 		player.setOpaque(true);
 		getPlayerPosition(player, position-1);
+		getMovableSpaces(position);
 	}
 	else if(e.getSource() == movableRight) {
+		for(int i = 0; i < 45; i++) {
+			tiles[i].setBackground(Color.white);
+		}
+		System.out.println("Right");
 		player = movableRight;
 		player.setBackground(Color.cyan);
 		player.setBorderPainted(false);
 		player.setOpaque(true);
 		getPlayerPosition(player, position+1);
+		getMovableSpaces(position);
 	}
 	else if(e.getSource() == movableNE) {
+		for(int i = 0; i < 45; i++) {
+			tiles[i].setBackground(Color.white);
+		}
+		System.out.println("NE");
 		player = movableNE;
 		player.setBackground(Color.cyan);
 		player.setBorderPainted(false);
 		player.setOpaque(true);
 		getPlayerPosition(player, position-8);
+		getMovableSpaces(position);
 	}
 	else if(e.getSource() == movableNW) {
+		for(int i = 0; i < 45; i++) {
+			tiles[i].setBackground(Color.white);
+		}
+		System.out.println("NW");
 		player = movableNW;
 		player.setBackground(Color.cyan);
 		player.setBorderPainted(false);
 		player.setOpaque(true);
 		getPlayerPosition(player, position-10);
+		getMovableSpaces(position);
 	}
 	else if(e.getSource() == movableSW) {
+		for(int i = 0; i < 45; i++) {
+			tiles[i].setBackground(Color.white);
+		}
+		System.out.println("SW");
 		player = movableSW;
 		player.setBackground(Color.cyan);
 		player.setBorderPainted(false);
 		player.setOpaque(true);
 		getPlayerPosition(player, position+8);
+		getMovableSpaces(position);
 	}
 	else if(e.getSource() == movableSE) {
+		for(int i = 0; i < 45; i++) {
+			tiles[i].setBackground(Color.white);
+		}
+		System.out.println("SE");
 		player = movableSE;
 		player.setBackground(Color.cyan);
 		player.setBorderPainted(false);
 		player.setOpaque(true);
 		getPlayerPosition(player, position+10);
+		getMovableSpaces(position);
 	}
-	getMovableSpaces(position);
+	else {
+		System.out.println("You can't move that far!");
+	}
+	
 	
 	
 	
