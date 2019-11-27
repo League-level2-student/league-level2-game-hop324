@@ -5,8 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
 
-public class Player implements ActionListener{
+public class Player extends Encounters implements ActionListener{
 	public JButton playerPosition;
 	public int position;
 	public JButton movableUp;
@@ -63,62 +65,62 @@ void getMovableSpaces(int ahhh) {
 	}
 	
 	if(position == 0) {
-		Deadlocked.tiles[position+9].setBackground(Color.yellow);
-		Deadlocked.tiles[position+10].setBackground(Color.yellow);
-		Deadlocked.tiles[position+1].setBackground(Color.yellow);
+		Deadlocked.tiles[position+9].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+10].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+1].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
 	}
 	else if(position == 44) {
-		Deadlocked.tiles[position-1].setBackground(Color.yellow);
-		Deadlocked.tiles[position-9].setBackground(Color.yellow);
-		Deadlocked.tiles[position-10].setBackground(Color.yellow);
+		Deadlocked.tiles[position-1].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position-9].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position-10].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
 	}
 	else if(position == 36) {
-		Deadlocked.tiles[position-9].setBackground(Color.yellow);
-		Deadlocked.tiles[position-8].setBackground(Color.yellow);
-		Deadlocked.tiles[position+1].setBackground(Color.yellow);
+		Deadlocked.tiles[position-9].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position-8].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+1].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
 	}
 	else if(position == 8) {
-		Deadlocked.tiles[position+9].setBackground(Color.yellow);
-		Deadlocked.tiles[position+8].setBackground(Color.yellow);
-		Deadlocked.tiles[position-1].setBackground(Color.yellow);
+		Deadlocked.tiles[position+9].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+8].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position-1].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
 	}
 	else if(position == 1 || position == 2 || position == 3 || position == 4 || position == 5 || position == 6 || position == 7) {
-		Deadlocked.tiles[position-1].setBackground(Color.yellow);
-		Deadlocked.tiles[position+8].setBackground(Color.yellow);
-		Deadlocked.tiles[position+9].setBackground(Color.yellow);
-		Deadlocked.tiles[position+10].setBackground(Color.yellow);
-		Deadlocked.tiles[position+1].setBackground(Color.yellow);
+		Deadlocked.tiles[position-1].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+8].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+9].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+10].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+1].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
 	}
 	else if(position == 37 || position == 38 || position == 39 || position == 40 || position == 41 || position == 42 || position == 43) {
-		Deadlocked.tiles[position-1].setBackground(Color.yellow);
-		Deadlocked.tiles[position-8].setBackground(Color.yellow);
-		Deadlocked.tiles[position-9].setBackground(Color.yellow);
-		Deadlocked.tiles[position-10].setBackground(Color.yellow);
-		Deadlocked.tiles[position+1].setBackground(Color.yellow);
+		Deadlocked.tiles[position-1].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position-8].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position-9].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position-10].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+1].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
 	}
 	else if(position == 17 || position == 26 || position == 35) {
-		Deadlocked.tiles[position-1].setBackground(Color.yellow);
-		Deadlocked.tiles[position+8].setBackground(Color.yellow);
-		Deadlocked.tiles[position+9].setBackground(Color.yellow);
-		Deadlocked.tiles[position-9].setBackground(Color.yellow);
-		Deadlocked.tiles[position-8].setBackground(Color.yellow);
+		Deadlocked.tiles[position-1].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+8].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+9].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position-9].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position-8].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
 	}
 	else if(position% 9 == 0) {
-		Deadlocked.tiles[position-9].setBackground(Color.yellow);
-		Deadlocked.tiles[position-8].setBackground(Color.yellow);
-		Deadlocked.tiles[position+9].setBackground(Color.yellow);
-		Deadlocked.tiles[position+10].setBackground(Color.yellow);
-		Deadlocked.tiles[position+1].setBackground(Color.yellow);
+		Deadlocked.tiles[position-9].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position-8].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+9].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+10].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+1].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
 	}
 	else {
-		Deadlocked.tiles[position-9].setBackground(Color.yellow);
-		Deadlocked.tiles[position-8].setBackground(Color.yellow);
-		Deadlocked.tiles[position-10].setBackground(Color.yellow);
-		Deadlocked.tiles[position-1].setBackground(Color.yellow);
-		Deadlocked.tiles[position+9].setBackground(Color.yellow);
-		Deadlocked.tiles[position+10].setBackground(Color.yellow);
-		Deadlocked.tiles[position+1].setBackground(Color.yellow);
-		Deadlocked.tiles[position+8].setBackground(Color.yellow);
+		Deadlocked.tiles[position-9].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position-8].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position-10].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position-1].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+9].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+10].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+1].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
+		Deadlocked.tiles[position+8].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
 		
 	}
 	//else if(position)
