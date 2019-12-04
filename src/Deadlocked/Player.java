@@ -22,6 +22,8 @@ public class Player extends Encounters implements ActionListener{
 	
 
 	
+
+	
 	
 void getPlayerPosition(JButton gamer, int index) {
 	playerPosition = gamer;

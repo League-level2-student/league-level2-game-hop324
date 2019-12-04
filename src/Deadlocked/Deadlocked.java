@@ -9,8 +9,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class Deadlocked extends Player  {
+public class Deadlocked extends Player implements KeyListener  {
 	//Define Variables
 	public int currentScreen;
 	public int startScreen = 0;
@@ -78,6 +80,7 @@ public void actionPerformed(ActionEvent e) {
 		for(int i = 0; i < 45; i++) {
 			tiles[i].setBorder(new BevelBorder(1, Color.white, Color.white));
 		}
+		getResource(position-9);
 		System.out.println("Up");
 		player = movableUp;
 		player.setBackground(Color.cyan);
@@ -91,6 +94,7 @@ public void actionPerformed(ActionEvent e) {
 		for(int i = 0; i < 45; i++) {
 			tiles[i].setBorder(new BevelBorder(1, Color.white, Color.white));
 		}
+		getResource(position+9);
 		System.out.println("Down");
 		player = movableDown;
 		player.setBackground(Color.cyan);
@@ -104,6 +108,7 @@ public void actionPerformed(ActionEvent e) {
 		for(int i = 0; i < 45; i++) {
 			tiles[i].setBorder(new BevelBorder(1, Color.white, Color.white));
 		}
+		getResource(position-1);
 		System.out.println("Left");
 		player = movableLeft;
 		player.setBackground(Color.cyan);
@@ -117,6 +122,7 @@ public void actionPerformed(ActionEvent e) {
 		for(int i = 0; i < 45; i++) {
 			tiles[i].setBorder(new BevelBorder(1, Color.white, Color.white));
 		}
+		getResource(position+1);
 		System.out.println("Right");
 		player = movableRight;
 		player.setBackground(Color.cyan);
@@ -130,6 +136,7 @@ public void actionPerformed(ActionEvent e) {
 		for(int i = 0; i < 45; i++) {
 			tiles[i].setBorder(new BevelBorder(1, Color.white, Color.white));
 		}
+		getResource(position-8);
 		System.out.println("NE");
 		player = movableNE;
 		player.setBackground(Color.cyan);
@@ -143,6 +150,7 @@ public void actionPerformed(ActionEvent e) {
 		for(int i = 0; i < 45; i++) {
 			tiles[i].setBorder(new BevelBorder(1, Color.white, Color.white));
 		}
+		getResource(position-10);
 		System.out.println("NW");
 		player = movableNW;
 		player.setBackground(Color.cyan);
@@ -150,12 +158,14 @@ public void actionPerformed(ActionEvent e) {
 		player.setBorderPainted(false);
 		getPlayerPosition(player, position-10);
 		getMovableSpaces(position);
+
 	}
 	else if(e.getSource() == movableSW) {
 		tiles[position].setBackground(Color.white);
 		for(int i = 0; i < 45; i++) {
 			tiles[i].setBorder(new BevelBorder(1, Color.white, Color.white));
 		}
+		getResource(position+8);
 		System.out.println("SW");
 		player = movableSW;
 		player.setBackground(Color.cyan);
@@ -169,6 +179,7 @@ public void actionPerformed(ActionEvent e) {
 		for(int i = 0; i < 45; i++) {
 			tiles[i].setBorder(new BevelBorder(1, Color.white, Color.white));
 		}
+		getResource(position+10);
 		System.out.println("SE");
 		player = movableSE;
 		player.setBackground(Color.cyan);
@@ -181,9 +192,31 @@ public void actionPerformed(ActionEvent e) {
 		System.out.println("You can't move that far!");
 	}
 	
+			 
 	
 	
 	
+	
+	
+}
+
+
+@Override
+public void keyTyped(KeyEvent e) {
+}
+
+
+@Override
+public void keyPressed(KeyEvent e) {
+	if(e.getKeyCode() == KeyEvent.VK_TAB) {
+		System.out.println("Your HP is: " + HP + ", your Attack Modifier is: " + AM + ", your Armor Class is: " + AC + ", and yoour have " + gold + " gold");
+	}
+}
+
+
+@Override
+public void keyReleased(KeyEvent e) {
+
 	
 }
 }
