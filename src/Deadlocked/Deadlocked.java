@@ -2,15 +2,16 @@ package Deadlocked;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 
 public class Deadlocked extends Player implements KeyListener  {
 	//Define Variables
@@ -29,7 +30,7 @@ public class Deadlocked extends Player implements KeyListener  {
 	//StartScreen Stuff End
 	
 	//GameScreen Stuff Start
-	public JFrame map = new JFrame();
+	public static JFrame map = new JFrame();
 	JPanel setup = new JPanel();
 	public static JButton[] tiles = new JButton[45];
 	
@@ -51,6 +52,7 @@ void createGameUI() {
 			tiles[i].setOpaque(true);
 			tiles[i].setBorderPainted(false);
 			tiles[i].addActionListener(this);
+			tiles[i].setFocusable(false);
 			if(i == 18) {
 				player = tiles[i];
 				player.setBackground(Color.cyan);
@@ -62,10 +64,13 @@ void createGameUI() {
 		}
 		getMovableSpaces(18);
 		getTiles();
+		map.addKeyListener(this);
 		map.add(setup);
 		map.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		map.setSize(1920, 550);
 		map.setVisible(true);
+		map.setFocusable(true);
+		map.hasFocus();
 
 }
 
@@ -191,32 +196,34 @@ public void actionPerformed(ActionEvent e) {
 	else {
 		System.out.println("You can't move that far!");
 	}
-	
-			 
-	
-	
-	
-	
-	
+	map.hasFocus();
 }
 
 
 @Override
 public void keyTyped(KeyEvent e) {
+	// TODO Auto-generated method stub
+	
 }
 
 
 @Override
 public void keyPressed(KeyEvent e) {
-	if(e.getKeyCode() == KeyEvent.VK_TAB) {
-		System.out.println("Your HP is: " + HP + ", your Attack Modifier is: " + AM + ", your Armor Class is: " + AC + ", and yoour have " + gold + " gold");
+	System.out.println(e.getKeyCode());
+	if(e.getKeyCode() == KeyEvent.VK_F1) {
+		JOptionPane.showMessageDialog(null, "You have: " + gold + " gold, " + HP + " health, " + AC + " armor, " + damage + " attack, and a " + AM + " attack modifier" );
+		
 	}
+	else if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+		JOptionPane.showMessageDialog(null, "You have " + smokeBombs + " smoke bombs, " + freezePotions + " freeze potions, and " + spareHearts + " spare hearts");
+	}
+	
 }
 
 
 @Override
 public void keyReleased(KeyEvent e) {
-
+	// TODO Auto-generated method stub
 	
 }
 }

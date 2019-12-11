@@ -1,12 +1,17 @@
 package Deadlocked;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
-public class Encounters {
+public class Encounters implements ActionListener {
 	
 	public int HP = 10;
 	public double AM = 1.0;
@@ -17,14 +22,21 @@ public class Encounters {
 	public int spareHearts = 0;
 	public int freezePotions = 0;
 	
-	int goblinTiles = 10;
+	public JButton goblin1;
+	public JButton goblin2;
+	public JButton goblin3;
+	public JButton goblin4;
+	public JButton goblin5;
+	
+	int goblinTiles = 12;
 	int dragonTile = 1;
 	int traderTile = 1;
-	int goldTiles = 10;
-	int normalTiles = 12;
-	int weaponTiles = 5;
-	int magicItemTiles = 5;
+	int goldTiles = 5;
+	int normalTiles = 20;
+	int weaponTiles = 3;
+	int magicItemTiles = 3;
 	int tileDecider;
+	boolean traderSet = true;
 	int tracker = 0;
 	Random randy = new Random();
 	Random traderLocation = new Random();
@@ -42,78 +54,79 @@ public class Encounters {
 				}
 			tileDecider = randy.nextInt(7);
 				if(tracker == 18) {
-					System.out.println("Poopus");
+					 
 					tracker++;
 				}
 				else if(tileDecider == 0 && normalTiles > 0) {
 					normalTiles--;
 					Deadlocked.tiles[tracker].setBackground(Color.white);
-					System.out.println("Bazinga");
+					 
 					tracker++;
 				}
 				else if(tileDecider == 0 && normalTiles == 0 && i >= 0) {
-					System.out.println("Bazoinga");
+					 
 					i--;
 				}
 				else if(tileDecider == 1 && goldTiles > 0) {
 					goldTiles--;
 					Deadlocked.tiles[tracker].setBackground(Color.yellow);
-					System.out.println("Bazinga");
+					 
 					tracker++;
 				}
 				else if(tileDecider == 1 && goldTiles == 0 && i >= 0) {
 					i--;
-					System.out.println("Bazoinga");
+					 
 				}
 				else if(tileDecider == 2 && dragonTile > 0) {
 					dragonTile--;
 					Deadlocked.tiles[tracker].setBackground(Color.red);
-					System.out.println("Bazinga");
+					 
 					tracker++;
 				}
 				else if(tileDecider == 2 && dragonTile == 0 && i >= 0) {
 					i--;
-					System.out.println("Bazoinga");
+					 
 				}
 				else if(tileDecider == 3 && goblinTiles > 0) {
 					goblinTiles--;
 					Deadlocked.tiles[tracker].setBackground(Color.green);
-					System.out.println("Bazinga");
+					 
 					tracker++;
 				}
 				else if(tileDecider == 3 && goblinTiles == 0 && i >= 0) {
 					i--;
-					System.out.println("Bazoinga");
+					 
 				}
 				else if(tileDecider == 4 && weaponTiles > 0) {
 					weaponTiles--;
 					Deadlocked.tiles[tracker].setBackground(Color.gray);
-					System.out.println("Bazinga");
+					 
 					tracker++;
 				}
 				else if(tileDecider == 4 && weaponTiles == 0 && i >= 0) {
 					i--;
-					System.out.println("Bazoinga");
+					 
 				}
 				else if(tileDecider == 5 && magicItemTiles > 0) {
 					magicItemTiles--;
 					Deadlocked.tiles[tracker].setBackground(Color.blue);
-					System.out.println("Bazinga");
+					 
 					tracker++;
 				}
 				else if(tileDecider == 5 && magicItemTiles == 0 && i >= 0) {
 					i--;
-					System.out.println("Bazoinga");
+					 
 				}
 				else if(tileDecider == 6 && traderTile > 0) {
 					traderTile--;
 					Deadlocked.tiles[tracker].setBackground(Color.PINK);
-					System.out.println("Bazinga");
+					traderPosition = tracker;
+					 
 					tracker++;
 				}
 				else if(tileDecider == 6 && traderTile == 0 && i >= 0) {
 					i--;
-					System.out.println("Bazoinga");
+					 
 
 				}
 		
@@ -121,12 +134,18 @@ public class Encounters {
 		}
 	}
 	
-
-	
-	
-	
 	void getNewTraderLocation(int yes) {
-		
+		Random reee = new Random();
+		while(!traderSet) {
+			int ahhh = reee.nextInt(45);
+			for(int i = 0; i < 45; i++) {
+				if(ahhh == i && Deadlocked.tiles[i].getBackground() == Color.white && i != traderPosition) {
+					traderPosition = i;
+					Deadlocked.tiles[i].setBackground(Color.PINK);
+					traderSet = true;
+				}
+			}
+		}
 	}
 	
 	void getResource(int pos) {
@@ -185,15 +204,18 @@ public class Encounters {
 			   }
 		   }
 		   else if(reee.equalsIgnoreCase("Equipment")) {
-			   String pepe = JOptionPane.showInputDialog("Sure! Which'd you like? Smoke Bomb(5G), Spare Heart(10G), or Freeze Potion(5G)?");
+			   String pepe = JOptionPane.showInputDialog("Sure! Which'd you like? Smoke Bomb(5G), Spare Heart(20G), or Freeze Potion(5G)?");
 			   if(pepe.equalsIgnoreCase("Smoke Bomb") && gold >= 5) {
 				   System.out.println("You got a Smoke Bomb!");
 				   smokeBombs++;
 			   }
-			   else if(pepe.equalsIgnoreCase("Spare Heart") && gold >= 10) {
+			   else if(pepe.equalsIgnoreCase("Spare Heart") && gold >= 20) {
 				   spareHearts++;
+				   System.out.println("You got a Spare Heart!");
+				   gold-=20;
 			   }
 			   else if(pepe.equalsIgnoreCase("Freeze Potion") && gold >= 5) {
+				   System.out.println("You got a Freeze Potion");
 				   freezePotions++;
 				   gold-=5;
 			   }
@@ -202,6 +224,8 @@ public class Encounters {
 			   
 		   }
 		   System.out.println("Thanks for shopping!");
+		   traderSet = false;
+		   getNewTraderLocation(traderPosition);
 	
 		 }
 		 else if(Deadlocked.tiles[pos].getBackground() == Color.gray){
@@ -249,17 +273,112 @@ public class Encounters {
 		 }
 		 else if(Deadlocked.tiles[pos].getBackground() == Color.yellow){
 		  Random ehh = new Random();
-		  int monay = ehh.nextInt(10)+1;
+		  int monay = ehh.nextInt(5)+1;
 		  gold+=monay;
 		  System.out.println("You found " + monay + " gold");
+		  Random jeff = new Random();
+		  int treasure = jeff.nextInt(25);
+		  if(treasure == 0) {
+			  System.out.println("Wow! You found a treasure chest! Inside is a Spare Heart!");
+			  spareHearts++;
+		  }
+		  else if(treasure == 1) {
+			  System.out.println("Wow! You found a treasure chest! Inside is a Freeze Potion!");
+			  freezePotions++;
+		  }
+		  else if(treasure == 2) {
+			  System.out.println("Wow! You found a treasure chest! Inside is a Smoke Bomb!");
+			  smokeBombs++;
+		  }
 		 }
 	}
 	
+
 	void gerbleEncounter() {
-		
+		Random f = new Random();
+		int x = f.nextInt(5)+1;
+		JOptionPane.showMessageDialog(null, "Oh no! " + x + " goblins appear!");
+		Deadlocked.map.setVisible(false);
+		JFrame battleField = new JFrame();
+		JPanel UI = new JPanel();
+		battleField.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		battleField.setSize(500, 700);
+		battleField.add(UI);
+		for(int i = 0; i < x; i++) {
+			if(i == 0) {
+				goblin1 = new JButton();
+				goblin1.addActionListener(this);
+				goblin1.setText("Goblin" + (i+1));
+				UI.add(goblin1);
+				goblin1.setMaximumSize(new Dimension(50, 25));
+				goblin1.setLocation((10*i), 400);
+			}
+			else if(i == 1) {
+				goblin2 = new JButton();
+				goblin2.addActionListener(this);
+				goblin2.setText("Goblin" + (i+1));
+				UI.add(goblin2);
+				goblin2.setMaximumSize(new Dimension(50, 25));
+				goblin2.setLocation((10*i), 400);
+			}
+			else if(i == 2) {
+				goblin3 = new JButton();
+				goblin3.addActionListener(this);
+				goblin3.setText("Goblin" + (i+1));
+				UI.add(goblin3);
+				goblin3.setMaximumSize(new Dimension(50, 25));
+				goblin3.setLocation((10*i), 400);
+			}
+			else if(i == 3) {
+				goblin4 = new JButton();
+				goblin4.addActionListener(this);
+				goblin4.setText("Goblin" + (i+1));
+				UI.add(goblin4);
+				goblin4.setMaximumSize(new Dimension(50, 25));
+				goblin4.setLocation((10*i), 400);
+			}
+			else if(i == 4) {
+				goblin5 = new JButton();
+				goblin5.addActionListener(this);
+				goblin5.setText("Goblin" + (i+1));
+				UI.add(goblin5);
+				goblin5.setMaximumSize(new Dimension(50, 25));
+				goblin5.setLocation((10*i), 400);
+			}
+			
+		}
+
+		battleField.setVisible(true);
 	}
 	
 	void dragonEncounter() {}
+
+
+
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == goblin1) {
+			
+		}
+		else if(e.getSource() == goblin1) {
+			
+		}
+		else if(e.getSource() == goblin2) {
+			
+		}
+		else if(e.getSource() == goblin3) {
+			
+		}
+		else if(e.getSource() == goblin4) {
+			
+		}
+		else if(e.getSource() == goblin5) {
+			
+		}
+		
+	}
 
 	
 }
