@@ -13,7 +13,10 @@ import javax.swing.JPanel;
 
 public class Encounters implements ActionListener {
 	
-	public int HP = 10;
+	public JFrame battleField = new JFrame();
+	public JPanel UI = new JPanel();
+	
+	public double HP = 20;
 	public double AM = 1.0;
 	public int AC = 10;
 	public int damage = 1;
@@ -23,10 +26,18 @@ public class Encounters implements ActionListener {
 	public int freezePotions = 0;
 	
 	public JButton goblin1;
+	public double goblin1HP = 10;
 	public JButton goblin2;
+	public double goblin2HP = 10;
 	public JButton goblin3;
+	public double goblin3HP = 10;
 	public JButton goblin4;
+	public double goblin4HP = 10;
 	public JButton goblin5;
+	public double goblin5HP = 10;
+	
+	public double goblinD = 3;
+	public int goblinCount;
 	
 	int goblinTiles = 12;
 	int dragonTile = 1;
@@ -186,7 +197,7 @@ public class Encounters implements ActionListener {
 			   gold-=10;
 		   }
 		   else if(reee.equalsIgnoreCase("Weapons")) {
-			   String pepe = JOptionPane.showInputDialog("Sure! Would you like a Sword(5G), Axe(10G), or Bow(10G)");
+			   String pepe = JOptionPane.showInputDialog("Sure! Would you like a Sword(5G), Axe(10G), or Bow(7G)");
 			   if(pepe.equalsIgnoreCase("Sword") && gold >= 5) {
 				   System.out.println("You got a sword!");
 				   damage = 5;
@@ -194,12 +205,10 @@ public class Encounters implements ActionListener {
 			   }
 			   else if(pepe.equalsIgnoreCase("Axe") && gold >= 10) {
 				   damage = 10;
-				   AC-=3;
 				   gold-=10;
 			   }
-			   else if(pepe.equalsIgnoreCase("Bow") && gold >= 10) {
-				   damage = 5;
-				   AC+=3;
+			   else if(pepe.equalsIgnoreCase("Bow") && gold >= 6) {
+				   damage = 7;
 				   gold-=10;
 			   }
 		   }
@@ -244,9 +253,8 @@ public class Encounters implements ActionListener {
 				}
 				else if(decider == 1) {
 					System.out.println("You got an Axe");
-					if(damage <= 10) {
+					if(damage < 10) {
 						damage = 10;
-						AC-=3;
 					}
 					else {
 						System.out.println("You scrap it for 6G");
@@ -255,9 +263,8 @@ public class Encounters implements ActionListener {
 				}
 				else if(decider == 2) {
 					System.out.println("You got a Bow");
-					if(damage <= 6) {
-						damage = 6;
-						AC+=3;
+					if(damage < 6) {
+						damage = 7;
 					}
 					else {
 						System.out.println("You scrap it for 6G");
@@ -295,12 +302,20 @@ public class Encounters implements ActionListener {
 	
 
 	void gerbleEncounter() {
+		if(AC >= 25) {
+			goblinD-=1.5;
+		}
+		else if(AC >= 19) {
+			goblinD-=1;
+		}
+		else if(AC >= 13) {
+			goblinD-=.5;
+		}
 		Random f = new Random();
 		int x = f.nextInt(5)+1;
+		goblinCount = x;
 		JOptionPane.showMessageDialog(null, "Oh no! " + x + " goblins appear!");
 		Deadlocked.map.setVisible(false);
-		JFrame battleField = new JFrame();
-		JPanel UI = new JPanel();
 		battleField.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		battleField.setSize(500, 700);
 		battleField.add(UI);
@@ -359,24 +374,7 @@ public class Encounters implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == goblin1) {
-			
-		}
-		else if(e.getSource() == goblin1) {
-			
-		}
-		else if(e.getSource() == goblin2) {
-			
-		}
-		else if(e.getSource() == goblin3) {
-			
-		}
-		else if(e.getSource() == goblin4) {
-			
-		}
-		else if(e.getSource() == goblin5) {
-			
-		}
+	
 		
 	}
 
