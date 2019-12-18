@@ -38,14 +38,18 @@ public class Encounters implements ActionListener {
 	
 	public double goblinD = 3;
 	public int goblinCount;
+	public double goblinDTracker;
+	
+	public JButton useFreeze;
+	public JButton useSmoke;
 	
 	int goblinTiles = 12;
 	int dragonTile = 1;
 	int traderTile = 1;
 	int goldTiles = 5;
-	int normalTiles = 20;
-	int weaponTiles = 3;
-	int magicItemTiles = 3;
+	int normalTiles = 16;
+	int weaponTiles = 5;
+	int magicItemTiles = 5;
 	int tileDecider;
 	boolean traderSet = true;
 	int tracker = 0;
@@ -161,6 +165,7 @@ public class Encounters implements ActionListener {
 	
 	void getResource(int pos) {
 		if(Deadlocked.tiles[pos].getBackground() == Color.blue){
+			
 			System.out.println("Stinky");
 			Random heh = new Random();
 			int decider = heh.nextInt(3);
@@ -176,7 +181,10 @@ public class Encounters implements ActionListener {
 				System.out.println("You got a potion of health!");
 				HP += 5;
 			}
-
+			if(Deadlocked.goblinAmbush >= 5) {
+				JOptionPane.showMessageDialog(null, "You waited too long! The goblins ambush you");
+				gerbleEncounter();
+			}
 		 }
 		 else if(Deadlocked.tiles[pos].getBackground() == Color.PINK){
 		  String reee = JOptionPane.showInputDialog("Howdy! Welcome to the trader! Please select a category: Magic Items, Weapons, or Equipment!");
@@ -235,7 +243,10 @@ public class Encounters implements ActionListener {
 		   System.out.println("Thanks for shopping!");
 		   traderSet = false;
 		   getNewTraderLocation(traderPosition);
-	
+			if(Deadlocked.goblinAmbush >= 5) {
+				JOptionPane.showMessageDialog(null, "You waited too long! The goblins ambush you");
+				gerbleEncounter();
+			}
 		 }
 		 else if(Deadlocked.tiles[pos].getBackground() == Color.gray){
 		  
@@ -271,6 +282,10 @@ public class Encounters implements ActionListener {
 						gold+=6;
 					}
 				}
+				if(Deadlocked.goblinAmbush >= 5) {
+					JOptionPane.showMessageDialog(null, "You waited too long! The goblins ambush you");
+					gerbleEncounter();
+				}
 		 }
 		 else if(Deadlocked.tiles[pos].getBackground() == Color.green){
 			 gerbleEncounter();
@@ -280,7 +295,7 @@ public class Encounters implements ActionListener {
 		 }
 		 else if(Deadlocked.tiles[pos].getBackground() == Color.yellow){
 		  Random ehh = new Random();
-		  int monay = ehh.nextInt(5)+1;
+		  int monay = ehh.nextInt(7)+3;
 		  gold+=monay;
 		  System.out.println("You found " + monay + " gold");
 		  Random jeff = new Random();
@@ -297,20 +312,18 @@ public class Encounters implements ActionListener {
 			  System.out.println("Wow! You found a treasure chest! Inside is a Smoke Bomb!");
 			  smokeBombs++;
 		  }
+			if(Deadlocked.goblinAmbush >= 5) {
+				JOptionPane.showMessageDialog(null, "You waited too long! The goblins ambush you");
+				gerbleEncounter();
+			}
 		 }
 	}
+
 	
 
 	void gerbleEncounter() {
-		if(AC >= 25) {
-			goblinD-=1.5;
-		}
-		else if(AC >= 19) {
-			goblinD-=1;
-		}
-		else if(AC >= 13) {
-			goblinD-=.5;
-		}
+		Deadlocked.goblinAmbush = 0;
+		
 		Random f = new Random();
 		int x = f.nextInt(5)+1;
 		goblinCount = x;
@@ -361,6 +374,12 @@ public class Encounters implements ActionListener {
 				goblin5.setLocation((10*i), 400);
 			}
 			
+		}
+		if(freezePotions > 0) {
+			useFreeze = new JButton();
+			useFreeze.addActionListener(this);
+			useFreeze.setText("Use Freeze Potion");
+			UI.add(useFreeze);
 		}
 
 		battleField.setVisible(true);

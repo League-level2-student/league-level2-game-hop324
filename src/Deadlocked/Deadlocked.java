@@ -21,6 +21,12 @@ public class Deadlocked extends Player implements KeyListener  {
 	public int gameScreen = 1;
 	public int endScreen = 2;
 	
+	public boolean goblinsAreRestless = false;
+	public boolean freezeActive = false;
+	
+	public static int turns = 0;
+	public static int goblinAmbush = 0;
+	
 	JButton player;
 	
 	//StartScreen Stuff Start
@@ -131,6 +137,37 @@ public static void main(String [] args) {
 }
 @Override
 public void actionPerformed(ActionEvent e) {
+	System.out.println(turns);
+	if(turns <= 20) {
+		goblinD = 1.5;
+		goblinDTracker = goblinD;
+	}
+	else if(turns > 20 ) {
+		if(!goblinsAreRestless) {
+		JOptionPane.showMessageDialog(null, "The goblins grow restless, their damage is increased from now on");
+		goblinsAreRestless = true;
+		}
+		goblinD = 3;
+		goblinDTracker = goblinD;
+		if(freezeActive) {
+			goblinD = 0;
+		}
+	}
+	
+	if(AC >= 25) {
+		goblinD = goblinD-1.5;
+		goblinDTracker = goblinD;
+	}
+	else if(AC >= 19) {
+		goblinD= goblinD-1;
+		goblinDTracker = goblinD;
+	}
+	else if(AC >= 13) {
+		goblinD= goblinD-0.5;
+		goblinDTracker = goblinD;
+		
+	}
+	
 	if(e.getSource() == goblin1) {
 		goblin1HP = goblin1HP-(AM*damage);
 		System.out.println("You dealt: " + (AM*damage) + " damage.");
@@ -140,6 +177,9 @@ public void actionPerformed(ActionEvent e) {
 			UI.remove(goblin1);
 			randomDrop(1);
 			if(goblinCount == 0) {
+				if(freezePotions > 0) {
+				UI.remove(useFreeze);
+				}
 				battleField.dispose();
 				System.out.println("You won!");
 				randomDrop(2);
@@ -148,6 +188,9 @@ public void actionPerformed(ActionEvent e) {
 			}
 			HP = HP-(goblinCount*goblinD);
 			System.out.println("You took: " + goblinCount*goblinD + " damage");
+			freezeActive = false;
+			goblinD = goblinDTracker;
+			System.out.println(goblinD);
 			if(HP <=0 && spareHearts <= 0) {
 				System.out.println("You died!");
 				map.dispose();
@@ -171,7 +214,12 @@ public void actionPerformed(ActionEvent e) {
 			}
 			HP = HP-(goblinCount*goblinD);
 			System.out.println("You took: " + goblinCount*goblinD + " damage");
+			freezeActive = false;
+			goblinD = goblinDTracker;
 			if(HP <=0 && spareHearts <= 0) {
+				if(freezePotions > 0) {
+				UI.remove(useFreeze);
+				}
 				System.out.println("You died!");
 				map.dispose();
 				battleField.dispose();
@@ -180,12 +228,16 @@ public void actionPerformed(ActionEvent e) {
 	else if(e.getSource() == goblin3) {
 		goblin3HP = goblin3HP-(AM*damage);
 		System.out.println("You dealt: " + (AM*damage) + " damage.");
+		goblinD = 3;
 		if(goblin3HP <= 0) {
 			System.out.println("You killed a goblin!");
 			goblinCount--;
 			UI.remove(goblin3);
 			randomDrop(1);
 			if(goblinCount == 0) {
+				if(freezePotions > 0) {
+				UI.remove(useFreeze);
+				}
 				battleField.dispose();
 				System.out.println("You won!");
 				randomDrop(2);
@@ -194,7 +246,12 @@ public void actionPerformed(ActionEvent e) {
 			}
 			HP = HP-(goblinCount*goblinD);
 			System.out.println("You took: " + goblinCount*goblinD + " damage");
+			freezeActive = false;
+			goblinD = goblinDTracker;
 			if(HP <=0 && spareHearts <= 0) {
+				if(freezePotions > 0) {
+				UI.remove(useFreeze);
+				}
 				System.out.println("You died!");
 				map.dispose();
 				battleField.dispose();
@@ -209,6 +266,9 @@ public void actionPerformed(ActionEvent e) {
 			UI.remove(goblin4);
 			randomDrop(1);
 			if(goblinCount == 0) {
+				if(freezePotions > 0) {
+				UI.remove(useFreeze);
+				}
 				battleField.dispose();
 				System.out.println("You won!");
 				randomDrop(2);
@@ -217,6 +277,8 @@ public void actionPerformed(ActionEvent e) {
 			}
 			HP = HP-(goblinCount*goblinD);
 			System.out.println("You took: " + goblinCount*goblinD + " damage");
+			freezeActive = false;
+			goblinD = goblinDTracker;
 			if(HP <=0 && spareHearts <= 0) {
 				System.out.println("You died!");
 				map.dispose();
@@ -232,6 +294,9 @@ public void actionPerformed(ActionEvent e) {
 			UI.remove(goblin5);
 			randomDrop(1);
 			if(goblinCount == 0) {
+				if(freezePotions > 0) {
+				UI.remove(useFreeze);
+				}
 				battleField.dispose();
 				System.out.println("You won!");
 				randomDrop(2);
@@ -240,10 +305,18 @@ public void actionPerformed(ActionEvent e) {
 			}
 			HP = HP-(goblinCount*goblinD);
 			System.out.println("You took: " + goblinCount*goblinD + " damage");
+			freezeActive = false;
+			goblinD = goblinDTracker;
 			if(HP <=0 && spareHearts <= 0) {
 				System.out.println("You died!");
 				map.dispose();
 				battleField.dispose();
+		}
+	}
+	else if(e.getSource() == useFreeze) {
+		freezeActive = true;
+		if(freezePotions <= 0) {
+			UI.remove(useFreeze);
 		}
 	}
 	else {
@@ -260,6 +333,8 @@ public void actionPerformed(ActionEvent e) {
 		player.setBorderPainted(false);
 		getPlayerPosition(player, position-9);
 		getMovableSpaces(position);
+		 turns++;
+		 goblinAmbush++;
 	}
 	else if(e.getSource() == movableDown) {
 		tiles[position].setBackground(Color.white);
@@ -274,6 +349,8 @@ public void actionPerformed(ActionEvent e) {
 		player.setBorderPainted(false);
 		getPlayerPosition(player, position+9);
 		getMovableSpaces(position);
+		 turns++;
+		 goblinAmbush++;
 	}
 	else if(e.getSource() == movableLeft) {
 		tiles[position].setBackground(Color.white);
@@ -288,6 +365,8 @@ public void actionPerformed(ActionEvent e) {
 		player.setBorderPainted(false);
 		getPlayerPosition(player, position-1);
 		getMovableSpaces(position);
+		 turns++;
+		 goblinAmbush++;
 	}
 	else if(e.getSource() == movableRight) {
 		tiles[position].setBackground(Color.white);
@@ -302,6 +381,8 @@ public void actionPerformed(ActionEvent e) {
 		player.setBorderPainted(false);
 		getPlayerPosition(player, position+1);
 		getMovableSpaces(position);
+		 turns++;
+		 goblinAmbush++;
 	}
 	else if(e.getSource() == movableNE) {
 		tiles[position].setBackground(Color.white);
@@ -316,6 +397,8 @@ public void actionPerformed(ActionEvent e) {
 		player.setBorderPainted(false);
 		getPlayerPosition(player, position-8);
 		getMovableSpaces(position);
+		 turns++;
+		 goblinAmbush++;
 	}
 	else if(e.getSource() == movableNW) {
 		tiles[position].setBackground(Color.white);
@@ -330,6 +413,8 @@ public void actionPerformed(ActionEvent e) {
 		player.setBorderPainted(false);
 		getPlayerPosition(player, position-10);
 		getMovableSpaces(position);
+		 turns++;
+		 goblinAmbush++;
 
 	}
 	else if(e.getSource() == movableSW) {
@@ -345,6 +430,8 @@ public void actionPerformed(ActionEvent e) {
 		player.setBorderPainted(false);
 		getPlayerPosition(player, position+8);
 		getMovableSpaces(position);
+		 turns++;
+		 goblinAmbush++;
 	}
 		else if(e.getSource() == movableSE) {
 			tiles[position].setBackground(Color.white);
@@ -359,6 +446,8 @@ public void actionPerformed(ActionEvent e) {
 			player.setBorderPainted(false);
 			getPlayerPosition(player, position+10);
 			getMovableSpaces(position);
+			 turns++;
+			 goblinAmbush++;
 		}
 		else {
 			System.out.println("You can't move that far!");
