@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -20,6 +21,8 @@ public class Deadlocked extends Player implements KeyListener  {
 	public int startScreen = 0;
 	public int gameScreen = 1;
 	public int endScreen = 2;
+	
+	public boolean gamer = false;
 	
 	public boolean goblinsAreRestless = false;
 	public boolean freezeActive = false;
@@ -137,9 +140,61 @@ public static void main(String [] args) {
 }
 @Override
 public void actionPerformed(ActionEvent e) {
+	//Final Boss Identifier
+	if(((JButton) e.getSource()).getBackground() == Color.red && remainingGoblins == 0) {
+		dragonEncounter();
+	}
+	else if(((JButton) e.getSource()).getBackground() == Color.red && remainingGoblins != 0) {
+		System.out.println("You're not ready to move there yet. You must defeat all the goblins first.");
+	}
+	else {
+		if(e.getSource() == dragon) {
+			if(freezeActive) {
+				dragonD = 0;
+			}
+			dragonHP = dragonHP-((AM*damage)-dragonAC);
+			System.out.println("You dealt: " + (AM*damage) + " damage.");
+			if(dragonHP <= 0) {
+				System.out.println("You killed the dragon! You win!");
+				battleField.dispose();
+				map.dispose();
+				}
+		Random DA = new Random();
+		int attack = DA.nextInt(4);
+			if(attack == 0) {
+				if(dragonAM > 0) {
+				HP = HP-((dragonD*dragonAM)-AC);
+				System.out.println("The dragon hits you with it's claws and does " + ((dragonD*dragonAM)-AC) + " damage");
+				}
+			}
+			else if(attack == 1) {
+				System.out.println("The dragon sharpens it's claws");
+				dragonAM+=.25;
+			}
+			else if(attack == 2) {
+				System.out.println("The dragon uses it's flame breath! It deals " + (30-AC) + " damage and melts some of your armor");
+				HP = HP-=30;
+				AC-=3;
+			}
+			else if(attack == 3) {
+				System.out.println("The dragon covers it's scales in treasure to increase it's armor");
+				dragonAC+=5;
+			}
+				freezeActive = false;
+				
+			if(HP <=0 && spareHearts <= 0) {
+					System.out.println("You died!");
+					map.dispose();
+					battleField.dispose();
+		}
+		}
+		
+	//Final Boss Identifier
+	
+	
 	System.out.println(turns);
 	if(turns <= 20) {
-		goblinD = 1.5;
+		goblinD = 1;
 		goblinDTracker = goblinD;
 	}
 	else if(turns > 20 ) {
@@ -149,9 +204,6 @@ public void actionPerformed(ActionEvent e) {
 		}
 		goblinD = 3;
 		goblinDTracker = goblinD;
-		if(freezeActive) {
-			goblinD = 0;
-		}
 	}
 	
 	if(AC >= 25) {
@@ -169,6 +221,9 @@ public void actionPerformed(ActionEvent e) {
 	}
 	
 	if(e.getSource() == goblin1) {
+		if(freezeActive) {
+			goblinD = 0;
+		}
 		goblin1HP = goblin1HP-(AM*damage);
 		System.out.println("You dealt: " + (AM*damage) + " damage.");
 		if(goblin1HP <= 0) {
@@ -181,6 +236,10 @@ public void actionPerformed(ActionEvent e) {
 				UI.remove(useFreeze);
 				}
 				battleField.dispose();
+				remainingGoblins--;
+				if(remainingGoblins == 0) {
+					JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
+				}
 				System.out.println("You won!");
 				randomDrop(2);
 				map.setVisible(true);
@@ -198,6 +257,9 @@ public void actionPerformed(ActionEvent e) {
 		}
 	}
 	else if(e.getSource() == goblin2) {
+		if(freezeActive) {
+			goblinD = 0;
+		}
 		goblin2HP = goblin2HP-(AM*damage);
 		System.out.println("You dealt: " + (AM*damage) + " damage.");
 		if(goblin2HP <= 0) {
@@ -207,6 +269,10 @@ public void actionPerformed(ActionEvent e) {
 			randomDrop(1);
 			if(goblinCount == 0) {
 				battleField.dispose();
+				remainingGoblins--;
+				if(remainingGoblins == 0) {
+					JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
+				}
 				System.out.println("You won!");
 				randomDrop(2);
 				map.setVisible(true);
@@ -226,6 +292,9 @@ public void actionPerformed(ActionEvent e) {
 		}
 	}
 	else if(e.getSource() == goblin3) {
+		if(freezeActive) {
+			goblinD = 0;
+		}
 		goblin3HP = goblin3HP-(AM*damage);
 		System.out.println("You dealt: " + (AM*damage) + " damage.");
 		goblinD = 3;
@@ -239,6 +308,10 @@ public void actionPerformed(ActionEvent e) {
 				UI.remove(useFreeze);
 				}
 				battleField.dispose();
+				remainingGoblins--;
+				if(remainingGoblins == 0) {
+					JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
+				}
 				System.out.println("You won!");
 				randomDrop(2);
 				map.setVisible(true);
@@ -258,6 +331,9 @@ public void actionPerformed(ActionEvent e) {
 		}
 	}
 	else if(e.getSource() == goblin4) {
+		if(freezeActive) {
+			goblinD = 0;
+		}
 		goblin4HP = goblin4HP-(AM*damage);
 		System.out.println("You dealt: " + (AM*damage) + " damage.");
 		if(goblin4HP <= 0) {
@@ -270,6 +346,10 @@ public void actionPerformed(ActionEvent e) {
 				UI.remove(useFreeze);
 				}
 				battleField.dispose();
+				remainingGoblins--;
+				if(remainingGoblins == 0) {
+					JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
+				}
 				System.out.println("You won!");
 				randomDrop(2);
 				map.setVisible(true);
@@ -286,6 +366,9 @@ public void actionPerformed(ActionEvent e) {
 		}
 	}
 	else if(e.getSource() == goblin5) {
+		if(freezeActive) {
+			goblinD = 0;
+		}
 		goblin5HP = goblin5HP-(AM*damage);
 		System.out.println("You dealt: " + (AM*damage) + " damage.");
 		if(goblin5HP <= 0) {
@@ -298,6 +381,10 @@ public void actionPerformed(ActionEvent e) {
 				UI.remove(useFreeze);
 				}
 				battleField.dispose();
+				remainingGoblins--;
+				if(remainingGoblins == 0) {
+					JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
+				}
 				System.out.println("You won!");
 				randomDrop(2);
 				map.setVisible(true);
@@ -314,6 +401,8 @@ public void actionPerformed(ActionEvent e) {
 		}
 	}
 	else if(e.getSource() == useFreeze) {
+		System.out.println("You freeze the enemies solid!");
+		freezePotions--;
 		freezeActive = true;
 		if(freezePotions <= 0) {
 			UI.remove(useFreeze);
@@ -452,8 +541,13 @@ public void actionPerformed(ActionEvent e) {
 		else {
 			System.out.println("You can't move that far!");
 		}
-	 map.hasFocus();
 	}
+	 if(remainingGoblins == 0) {
+		 goblinAmbush = 0;
+	 }
+	}
+	 map.hasFocus();
+	
 }
 
 
@@ -473,6 +567,19 @@ public void keyPressed(KeyEvent e) {
 	}
 	else if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 		JOptionPane.showMessageDialog(null, "You have " + smokeBombs + " smoke bombs, " + freezePotions + " freeze potions, and " + spareHearts + " spare hearts");
+	}
+	if(e.getKeyCode() == KeyEvent.VK_6) {
+		gamer = true;
+	}
+	if(e.getKeyCode() == KeyEvent.VK_9 && gamer) {
+		for(int i = 0; i < 45; i++) {
+			if(tiles[i].getBackground() == Color.green) {
+				tiles[i].setBackground(Color.white);
+			}
+			remainingGoblins = 0;
+			System.out.println("Bazinga");
+			System.out.println("All the goblins were evaporated by the power of Waluigi's war cry.");
+		}
 	}
 	
 }

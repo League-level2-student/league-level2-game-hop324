@@ -44,6 +44,7 @@ public class Encounters implements ActionListener {
 	public JButton useSmoke;
 	
 	int goblinTiles = 12;
+	public int remainingGoblins = 12;
 	int dragonTile = 1;
 	int traderTile = 1;
 	int goldTiles = 5;
@@ -56,6 +57,14 @@ public class Encounters implements ActionListener {
 	Random randy = new Random();
 	Random traderLocation = new Random();
 	int traderPosition;
+	
+	
+	public JButton dragon;
+	public double dragonHP = 100;
+	public int dragonAC = 10;
+	public double dragonAM = 1.0;
+	public int dragonD = 35;
+	
 	
 	void getTiles() {
 		if(goblinTiles == 0 && dragonTile == 0 && normalTiles == 0 && goldTiles == 0 && weaponTiles == 0 && magicItemTiles == 0) {
@@ -179,7 +188,7 @@ public class Encounters implements ActionListener {
 			}
 			else if(decider == 2) {
 				System.out.println("You got a potion of health!");
-				HP += 5;
+				HP += 10;
 			}
 			if(Deadlocked.goblinAmbush >= 5) {
 				JOptionPane.showMessageDialog(null, "You waited too long! The goblins ambush you");
@@ -200,7 +209,7 @@ public class Encounters implements ActionListener {
 			   	}
 				else if(pepe.equalsIgnoreCase("Potion of Health")) {
 					System.out.println("You got a potion of health!");
-					HP += 5;
+					HP += 10;
 				}
 			   gold-=10;
 		   }
@@ -235,6 +244,17 @@ public class Encounters implements ActionListener {
 				   System.out.println("You got a Freeze Potion");
 				   freezePotions++;
 				   gold-=5;
+			   }
+		   }
+		   else if(reee.equalsIgnoreCase("PizzaTime")) {
+			   String pepe = JOptionPane.showInputDialog("Are you sure you want to initiate Pizza Time? Yes or No");
+			   if(pepe.equalsIgnoreCase("Yes")) {
+				   JOptionPane.showMessageDialog(null, "Very well then. Bagels");
+				   HP += 10000;
+				   AM += 10;
+				   damage += 100;
+				   AC += 100;
+				   gold+= 10000;
 			   }
 		   }
 		   else {
@@ -384,8 +404,34 @@ public class Encounters implements ActionListener {
 
 		battleField.setVisible(true);
 	}
+
 	
-	void dragonEncounter() {}
+	
+	void dragonEncounter() {
+		for(int i = 0; i < 45; i++) {
+			Deadlocked.tiles[i].setBackground(Color.white);
+		}
+		JOptionPane.showMessageDialog(null, "You enter a large cave to find a large red dragon that roars at you.");
+		if(freezePotions > 0) {
+			useFreeze = new JButton();
+			useFreeze.addActionListener(this);
+			useFreeze.setText("Use Freeze Potion");
+			UI.add(useFreeze);
+		}
+		dragon = new JButton();
+		dragon.setPreferredSize(new Dimension(500, 250));
+		dragon.setOpaque(true);
+		dragon.setBorderPainted(false);
+		dragon.addActionListener(this);
+		dragon.setFocusable(false);
+		dragon.setText("The Dragon");
+		UI.add(dragon);
+		battleField.add(UI);
+		Deadlocked.map.setVisible(false);
+		battleField.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		battleField.setSize(500, 700);
+		battleField.setVisible(true);
+	}
 
 
 
