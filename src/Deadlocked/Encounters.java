@@ -17,6 +17,7 @@ public class Encounters implements ActionListener {
 	public JPanel UI = new JPanel();
 	
 	public double HP = 20;
+	public double maxHP = HP;
 	public double AM = 1.0;
 	public int AC = 10;
 	public int damage = 1;
@@ -60,7 +61,7 @@ public class Encounters implements ActionListener {
 	
 	
 	public JButton dragon;
-	public double dragonHP = 100;
+	public double dragonHP = 1000;
 	public int dragonAC = 10;
 	public double dragonAM = 1.0;
 	public int dragonD = 35;
@@ -189,84 +190,16 @@ public class Encounters implements ActionListener {
 			else if(decider == 2) {
 				System.out.println("You got a potion of health!");
 				HP += 10;
+				maxHP +=10;
 			}
 			if(Deadlocked.goblinAmbush >= 5) {
 				JOptionPane.showMessageDialog(null, "You waited too long! The goblins ambush you");
 				gerbleEncounter();
+				remainingGoblins++;
 			}
 		 }
 		 else if(Deadlocked.tiles[pos].getBackground() == Color.PINK){
-		  String reee = JOptionPane.showInputDialog("Howdy! Welcome to the trader! Please select a category: Magic Items, Weapons, or Equipment!");
-		   if(reee.equalsIgnoreCase("Magic Items" ) && gold >= 10) {
-			   String pepe = JOptionPane.showInputDialog("Sure, they all cost 10 gold! Which'd you like? Magic Armor, Potion of Strength, or Potion of Health?");
-			   if(pepe.equalsIgnoreCase("Magic Armor")) {
-				   System.out.println("You got some magic armor!");
-					AC += 3;
-			   	}
-			   else if(pepe.equalsIgnoreCase("Potion of Strength")) {
-				   System.out.println("You got a potion of strength!");
-					AM += .5;
-			   	}
-				else if(pepe.equalsIgnoreCase("Potion of Health")) {
-					System.out.println("You got a potion of health!");
-					HP += 10;
-				}
-			   gold-=10;
-		   }
-		   else if(reee.equalsIgnoreCase("Weapons")) {
-			   String pepe = JOptionPane.showInputDialog("Sure! Would you like a Sword(5G), Axe(10G), or Bow(7G)");
-			   if(pepe.equalsIgnoreCase("Sword") && gold >= 5) {
-				   System.out.println("You got a sword!");
-				   damage = 5;
-				   gold-=5;
-			   }
-			   else if(pepe.equalsIgnoreCase("Axe") && gold >= 10) {
-				   damage = 10;
-				   gold-=10;
-			   }
-			   else if(pepe.equalsIgnoreCase("Bow") && gold >= 6) {
-				   damage = 7;
-				   gold-=10;
-			   }
-		   }
-		   else if(reee.equalsIgnoreCase("Equipment")) {
-			   String pepe = JOptionPane.showInputDialog("Sure! Which'd you like? Smoke Bomb(5G), Spare Heart(20G), or Freeze Potion(5G)?");
-			   if(pepe.equalsIgnoreCase("Smoke Bomb") && gold >= 5) {
-				   System.out.println("You got a Smoke Bomb!");
-				   smokeBombs++;
-			   }
-			   else if(pepe.equalsIgnoreCase("Spare Heart") && gold >= 20) {
-				   spareHearts++;
-				   System.out.println("You got a Spare Heart!");
-				   gold-=20;
-			   }
-			   else if(pepe.equalsIgnoreCase("Freeze Potion") && gold >= 5) {
-				   System.out.println("You got a Freeze Potion");
-				   freezePotions++;
-				   gold-=5;
-			   }
-		   }
-		   else if(reee.equalsIgnoreCase("PizzaTime")) {
-			   String pepe = JOptionPane.showInputDialog("Are you sure you want to initiate Pizza Time? Yes or No");
-			   if(pepe.equalsIgnoreCase("Yes")) {
-				   JOptionPane.showMessageDialog(null, "Very well then. Bagels");
-				   HP += 10000;
-				   AM += 10;
-				   damage += 100;
-				   AC += 100;
-				   gold+= 10000;
-			   }
-		   }
-		   else {
-			   
-		   }
-		   System.out.println("Thanks for shopping!");
-		   traderSet = false;
-		   getNewTraderLocation(traderPosition);
-			if(Deadlocked.goblinAmbush >= 5) {
-				JOptionPane.showMessageDialog(null, "You waited too long! The goblins ambush you");
-				gerbleEncounter();
-			}
+		 shopping();
 		 }
 		 else if(Deadlocked.tiles[pos].getBackground() == Color.gray){
 		  
@@ -434,7 +367,81 @@ public class Encounters implements ActionListener {
 	}
 
 
-
+void shopping() {
+	 String reee = JOptionPane.showInputDialog("Howdy! Welcome to the trader! Please select a category: Magic Items, Weapons, or Equipment!");
+	   if(reee.equalsIgnoreCase("Magic Items" ) && gold >= 10) {
+		   String pepe = JOptionPane.showInputDialog("Sure, they all cost 10 gold! Which'd you like? Magic Armor, Potion of Strength, or Potion of Health?");
+		   if(pepe.equalsIgnoreCase("Magic Armor")) {
+			   System.out.println("You got some magic armor!");
+				AC += 3;
+		   	}
+		   else if(pepe.equalsIgnoreCase("Potion of Strength")) {
+			   System.out.println("You got a potion of strength!");
+				AM += .5;
+		   	}
+			else if(pepe.equalsIgnoreCase("Potion of Health")) {
+				System.out.println("You got a potion of health!");
+				HP += 10;
+				maxHP +=10;
+			}
+		   gold-=10;
+	   }
+	   else if(reee.equalsIgnoreCase("Weapons")) {
+		   String pepe = JOptionPane.showInputDialog("Sure! Would you like a Sword(5G), Axe(10G), or Bow(7G)");
+		   if(pepe.equalsIgnoreCase("Sword") && gold >= 5) {
+			   System.out.println("You got a sword!");
+			   damage = 5;
+			   gold-=5;
+		   }
+		   else if(pepe.equalsIgnoreCase("Axe") && gold >= 10) {
+			   damage = 10;
+			   gold-=10;
+		   }
+		   else if(pepe.equalsIgnoreCase("Bow") && gold >= 6) {
+			   damage = 7;
+			   gold-=10;
+		   }
+	   }
+	   else if(reee.equalsIgnoreCase("Equipment")) {
+		   String pepe = JOptionPane.showInputDialog("Sure! Which'd you like? Smoke Bomb(5G), Spare Heart(20G), or Freeze Potion(5G)?");
+		   if(pepe.equalsIgnoreCase("Smoke Bomb") && gold >= 5) {
+			   System.out.println("You got a Smoke Bomb!");
+			   smokeBombs++;
+		   }
+		   else if(pepe.equalsIgnoreCase("Spare Heart") && gold >= 20) {
+			   spareHearts++;
+			   System.out.println("You got a Spare Heart!");
+			   gold-=20;
+		   }
+		   else if(pepe.equalsIgnoreCase("Freeze Potion") && gold >= 5) {
+			   System.out.println("You got a Freeze Potion");
+			   freezePotions++;
+			   gold-=5;
+		   }
+	   }
+	   else if(reee.equalsIgnoreCase("PizzaTime")) {
+		   String pepe = JOptionPane.showInputDialog("Are you sure you want to initiate Pizza Time? Yes or No");
+		   if(pepe.equalsIgnoreCase("Yes")) {
+			   JOptionPane.showMessageDialog(null, "Very well then. Bagels");
+			   HP += 10000;
+			   AM += 10;
+			   damage += 100;
+			   AC += 100;
+			   gold+= 10000;
+		   }
+	   }
+	  String aghjrfdsjahflke = JOptionPane.showInputDialog("Would you like to keep shopping? Yes or No");
+	  if(aghjrfdsjahflke.equalsIgnoreCase("Yes")) {
+		  shopping();
+	  }
+	   System.out.println("Thanks for shopping!");
+	   traderSet = false;
+	   getNewTraderLocation(traderPosition);
+		if(Deadlocked.goblinAmbush >= 5) {
+			JOptionPane.showMessageDialog(null, "You waited too long! The goblins ambush you");
+			gerbleEncounter();
+		}
+}
 
 
 	@Override

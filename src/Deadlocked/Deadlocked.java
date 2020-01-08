@@ -60,7 +60,7 @@ void createGameUI() {
 			tiles[i] = ahh;
 			tiles[i].setPreferredSize(new Dimension(200, 100));
 			tiles[i].setOpaque(true);
-			tiles[i].setBorderPainted(false);
+			tiles[i].setBorderPainted(true);
 			tiles[i].addActionListener(this);
 			tiles[i].setFocusable(false);
 			if(i == 18) {
@@ -152,8 +152,11 @@ public void actionPerformed(ActionEvent e) {
 			if(freezeActive) {
 				dragonD = 0;
 			}
+			else {
+				dragonD = 35;
+			}
 			dragonHP = dragonHP-((AM*damage)-dragonAC);
-			System.out.println("You dealt: " + (AM*damage) + " damage.");
+			System.out.println("You dealt: " + ((AM*damage)-dragonAC) + " damage.");
 			if(dragonHP <= 0) {
 				System.out.println("You killed the dragon! You win!");
 				battleField.dispose();
@@ -187,6 +190,7 @@ public void actionPerformed(ActionEvent e) {
 					map.dispose();
 					battleField.dispose();
 		}
+			
 		}
 		
 	//Final Boss Identifier
@@ -255,6 +259,11 @@ public void actionPerformed(ActionEvent e) {
 				map.dispose();
 				battleField.dispose();
 		}
+			else if(HP <= 0 && spareHearts > 0) {
+				spareHearts--;
+				System.out.println("Your spare heart brought you back to life!");
+				HP = maxHP;
+			}
 	}
 	else if(e.getSource() == goblin2) {
 		if(freezeActive) {
@@ -290,6 +299,11 @@ public void actionPerformed(ActionEvent e) {
 				map.dispose();
 				battleField.dispose();
 		}
+			else if(HP <= 0 && spareHearts > 0) {
+				spareHearts--;
+				System.out.println("Your spare heart brought you back to life!");
+				HP = maxHP;
+			}
 	}
 	else if(e.getSource() == goblin3) {
 		if(freezeActive) {
@@ -329,6 +343,11 @@ public void actionPerformed(ActionEvent e) {
 				map.dispose();
 				battleField.dispose();
 		}
+			else if(HP <= 0 && spareHearts > 0) {
+				spareHearts--;
+				System.out.println("Your spare heart brought you back to life!");
+				HP = maxHP;
+			}
 	}
 	else if(e.getSource() == goblin4) {
 		if(freezeActive) {
@@ -364,6 +383,11 @@ public void actionPerformed(ActionEvent e) {
 				map.dispose();
 				battleField.dispose();
 		}
+			else if(HP <= 0 && spareHearts > 0) {
+				spareHearts--;
+				System.out.println("Your spare heart brought you back to life!");
+				HP = maxHP;
+			}
 	}
 	else if(e.getSource() == goblin5) {
 		if(freezeActive) {
@@ -399,6 +423,11 @@ public void actionPerformed(ActionEvent e) {
 				map.dispose();
 				battleField.dispose();
 		}
+			else if(HP <= 0 && spareHearts > 0) {
+				spareHearts--;
+				System.out.println("Your spare heart brought you back to life!");
+				HP = maxHP;
+			}
 	}
 	else if(e.getSource() == useFreeze) {
 		System.out.println("You freeze the enemies solid!");
@@ -546,6 +575,9 @@ public void actionPerformed(ActionEvent e) {
 		 goblinAmbush = 0;
 	 }
 	}
+	if(HP < maxHP) {
+		HP++;
+	}
 	 map.hasFocus();
 	
 }
@@ -577,9 +609,10 @@ public void keyPressed(KeyEvent e) {
 				tiles[i].setBackground(Color.white);
 			}
 			remainingGoblins = 0;
-			System.out.println("Bazinga");
-			System.out.println("All the goblins were evaporated by the power of Waluigi's war cry.");
+
 		}
+		System.out.println("Bazinga");
+		System.out.println("All the goblins were evaporated by the power of Waluigi's war cry.");
 	}
 	
 }
