@@ -2,10 +2,12 @@ package Deadlocked;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -69,7 +71,7 @@ public class Encounters implements ActionListener {
 	
 	void getTiles() {
 		if(goblinTiles == 0 && dragonTile == 0 && normalTiles == 0 && goldTiles == 0 && weaponTiles == 0 && magicItemTiles == 0) {
-			getNewTraderLocation(traderPosition);
+			getNewTraderLocation();
 		}
 		else {
 			for(int i = 0; i < 45; i++) {
@@ -95,7 +97,11 @@ public class Encounters implements ActionListener {
 				else if(tileDecider == 1 && goldTiles > 0) {
 					goldTiles--;
 					Deadlocked.tiles[tracker].setBackground(Color.yellow);
-					 
+					ImageIcon coin = new ImageIcon("coinSprite.png");
+					Image ing = coin.getImage();
+					Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+					coin = new ImageIcon(newing);
+					Deadlocked.tiles[tracker].setIcon(coin);
 					tracker++;
 				}
 				else if(tileDecider == 1 && goldTiles == 0 && i >= 0) {
@@ -105,7 +111,11 @@ public class Encounters implements ActionListener {
 				else if(tileDecider == 2 && dragonTile > 0) {
 					dragonTile--;
 					Deadlocked.tiles[tracker].setBackground(Color.red);
-					 
+					ImageIcon coin = new ImageIcon("dragonSprite.png");
+					Image ing = coin.getImage();
+					Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+					coin = new ImageIcon(newing);
+					Deadlocked.tiles[tracker].setIcon(coin);
 					tracker++;
 				}
 				else if(tileDecider == 2 && dragonTile == 0 && i >= 0) {
@@ -115,7 +125,11 @@ public class Encounters implements ActionListener {
 				else if(tileDecider == 3 && goblinTiles > 0) {
 					goblinTiles--;
 					Deadlocked.tiles[tracker].setBackground(Color.green);
-					 
+					ImageIcon goblin = new ImageIcon("gerbleSprite.png");
+					Image ing = goblin.getImage();
+					Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+					goblin = new ImageIcon(newing);
+					Deadlocked.tiles[tracker].setIcon(goblin);
 					tracker++;
 				}
 				else if(tileDecider == 3 && goblinTiles == 0 && i >= 0) {
@@ -125,7 +139,11 @@ public class Encounters implements ActionListener {
 				else if(tileDecider == 4 && weaponTiles > 0) {
 					weaponTiles--;
 					Deadlocked.tiles[tracker].setBackground(Color.gray);
-					 
+					ImageIcon weapon = new ImageIcon("weaponSprite.png");
+					Image ing = weapon.getImage();
+					Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+					weapon = new ImageIcon(newing);
+					Deadlocked.tiles[tracker].setIcon(weapon);
 					tracker++;
 				}
 				else if(tileDecider == 4 && weaponTiles == 0 && i >= 0) {
@@ -135,7 +153,11 @@ public class Encounters implements ActionListener {
 				else if(tileDecider == 5 && magicItemTiles > 0) {
 					magicItemTiles--;
 					Deadlocked.tiles[tracker].setBackground(Color.blue);
-					 
+					ImageIcon coin = new ImageIcon("magicItem.png");
+					Image ing = coin.getImage();
+					Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+					coin = new ImageIcon(newing);
+					Deadlocked.tiles[tracker].setIcon(coin);
 					tracker++;
 				}
 				else if(tileDecider == 5 && magicItemTiles == 0 && i >= 0) {
@@ -146,7 +168,11 @@ public class Encounters implements ActionListener {
 					traderTile--;
 					Deadlocked.tiles[tracker].setBackground(Color.PINK);
 					traderPosition = tracker;
-					 
+					ImageIcon merchant = new ImageIcon("merchantSprite.png");
+					Image ing = merchant.getImage();
+					Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+					merchant = new ImageIcon(newing);
+					Deadlocked.tiles[tracker].setIcon(merchant);
 					tracker++;
 				}
 				else if(tileDecider == 6 && traderTile == 0 && i >= 0) {
@@ -159,22 +185,47 @@ public class Encounters implements ActionListener {
 		}
 	}
 	
-	void getNewTraderLocation(int yes) {
-		Random reee = new Random();
-		while(!traderSet) {
-			int ahhh = reee.nextInt(45);
-			for(int i = 0; i < 45; i++) {
-				if(ahhh == i && Deadlocked.tiles[i].getBackground() == Color.white && i != traderPosition) {
-					traderPosition = i;
-					Deadlocked.tiles[i].setBackground(Color.PINK);
-					traderSet = true;
+	void getNewTraderLocation() {
+		System.out.println("yeet");
+		int numberOfTraders = 0;
+		for(int i = 0; i <45; i++) {
+			if(Deadlocked.tiles[i].getBackground() == Color.PINK) {
+				numberOfTraders++;
+				if(numberOfTraders > 1) {
+					Deadlocked.tiles[i].setBackground(Color.white);
+					numberOfTraders--;
+					System.out.println("fat yeet");
+				}
+				
+			}
+		}
+		if(numberOfTraders <= 1) {
+			System.out.println("Fattest yeet");
+			Random reee = new Random();
+			while(!traderSet) {
+				System.out.println("ascended yeet");
+				int ahhh = reee.nextInt(45);
+				for(int i = 0; i < 45; i++) {
+					if(ahhh == i && Deadlocked.tiles[i].getBackground() == Color.white && i != traderPosition) {
+						traderPosition = i;
+						System.out.println("Why is this not working lul");
+						Deadlocked.tiles[i].setBackground(Color.PINK);
+						traderSet = true;
+					}
 				}
 			}
 		}
 	}
 	
 	void getResource(int pos) {
-		if(Deadlocked.tiles[pos].getBackground() == Color.blue){
+		if(Deadlocked.tiles[pos].getBackground() == Color.white) {
+			if(Deadlocked.goblinAmbush >= 5) {
+				JOptionPane.showMessageDialog(null, "You waited too long! The goblins ambush you");
+				gerbleEncounter();
+				remainingGoblins++;
+			}
+		}
+		else if(Deadlocked.tiles[pos].getBackground() == Color.blue){
 			
 			System.out.println("Stinky");
 			Random heh = new Random();
@@ -369,6 +420,9 @@ public class Encounters implements ActionListener {
 
 void shopping() {
 	 String reee = JOptionPane.showInputDialog("Howdy! Welcome to the trader! Please select a category: Magic Items, Weapons, or Equipment!");
+	 if(reee == null) {
+		 shopping();
+	 }
 	   if(reee.equalsIgnoreCase("Magic Items" ) && gold >= 10) {
 		   String pepe = JOptionPane.showInputDialog("Sure, they all cost 10 gold! Which'd you like? Magic Armor, Potion of Strength, or Potion of Health?");
 		   if(pepe.equalsIgnoreCase("Magic Armor")) {
@@ -430,13 +484,22 @@ void shopping() {
 			   gold+= 10000;
 		   }
 	   }
+
 	  String aghjrfdsjahflke = JOptionPane.showInputDialog("Would you like to keep shopping? Yes or No");
-	  if(aghjrfdsjahflke.equalsIgnoreCase("Yes")) {
+	  if(aghjrfdsjahflke == null) {
 		  shopping();
 	  }
+	  else if(aghjrfdsjahflke.equalsIgnoreCase("Yes")) {
+		  shopping();
+	  }
+	  else if(aghjrfdsjahflke.equalsIgnoreCase("No")) {
+		  getNewTraderLocation();
+	  }
+	
+	  
 	   System.out.println("Thanks for shopping!");
 	   traderSet = false;
-	   getNewTraderLocation(traderPosition);
+	   getNewTraderLocation();
 		if(Deadlocked.goblinAmbush >= 5) {
 			JOptionPane.showMessageDialog(null, "You waited too long! The goblins ambush you");
 			gerbleEncounter();

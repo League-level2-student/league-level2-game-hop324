@@ -1,5 +1,6 @@
 package Deadlocked;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -9,6 +10,7 @@ import javax.swing.border.BevelBorder;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -61,11 +63,17 @@ void createGameUI() {
 			tiles[i].setPreferredSize(new Dimension(200, 100));
 			tiles[i].setOpaque(true);
 			tiles[i].setBorderPainted(true);
+			tiles[i].setBorder(new BevelBorder(1, Color.white, Color.white));
 			tiles[i].addActionListener(this);
 			tiles[i].setFocusable(false);
 			if(i == 18) {
 				player = tiles[i];
 				player.setBackground(Color.cyan);
+				ImageIcon coin = new ImageIcon("REEEEEE.jpeg");
+				Image ing = coin.getImage();
+				Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+				coin = new ImageIcon(newing);
+				tiles[i].setIcon(coin);
 				player.setOpaque(true);
 				getPlayerPosition(player, i);
 			}
@@ -437,9 +445,11 @@ public void actionPerformed(ActionEvent e) {
 			UI.remove(useFreeze);
 		}
 	}
+	
 	else {
 	 if(e.getSource() == movableUp) {
 		tiles[position].setBackground(Color.white);
+		tiles[position].setIcon(null);
 		for(int i = 0; i < 45; i++) {
 			tiles[i].setBorder(new BevelBorder(1, Color.white, Color.white));
 		}
@@ -447,6 +457,11 @@ public void actionPerformed(ActionEvent e) {
 		System.out.println("Up");
 		player = movableUp;
 		player.setBackground(Color.cyan);
+		ImageIcon coin = new ImageIcon("REEEEEE.png");
+		Image ing = coin.getImage();
+		Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+		coin = new ImageIcon(newing);
+		player.setIcon(coin);
 		player.setOpaque(true);
 		player.setBorderPainted(false);
 		getPlayerPosition(player, position-9);
@@ -456,6 +471,7 @@ public void actionPerformed(ActionEvent e) {
 	}
 	else if(e.getSource() == movableDown) {
 		tiles[position].setBackground(Color.white);
+		tiles[position].setIcon(null);
 		for(int i = 0; i < 45; i++) {
 			tiles[i].setBorder(new BevelBorder(1, Color.white, Color.white));
 		}
@@ -463,6 +479,11 @@ public void actionPerformed(ActionEvent e) {
 		System.out.println("Down");
 		player = movableDown;
 		player.setBackground(Color.cyan);
+		ImageIcon coin = new ImageIcon("REEEEEE.png");
+		Image ing = coin.getImage();
+		Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+		coin = new ImageIcon(newing);
+		player.setIcon(coin);
 		player.setOpaque(true);
 		player.setBorderPainted(false);
 		getPlayerPosition(player, position+9);
@@ -472,6 +493,7 @@ public void actionPerformed(ActionEvent e) {
 	}
 	else if(e.getSource() == movableLeft) {
 		tiles[position].setBackground(Color.white);
+		tiles[position].setIcon(null);
 		for(int i = 0; i < 45; i++) {
 			tiles[i].setBorder(new BevelBorder(1, Color.white, Color.white));
 		}
@@ -479,6 +501,11 @@ public void actionPerformed(ActionEvent e) {
 		System.out.println("Left");
 		player = movableLeft;
 		player.setBackground(Color.cyan);
+		ImageIcon coin = new ImageIcon("REEEEEE.png");
+		Image ing = coin.getImage();
+		Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+		coin = new ImageIcon(newing);
+		player.setIcon(coin);
 		player.setOpaque(true);
 		player.setBorderPainted(false);
 		getPlayerPosition(player, position-1);
@@ -487,6 +514,7 @@ public void actionPerformed(ActionEvent e) {
 		 goblinAmbush++;
 	}
 	else if(e.getSource() == movableRight) {
+		tiles[position].setIcon(null);
 		tiles[position].setBackground(Color.white);
 		for(int i = 0; i < 45; i++) {
 			tiles[i].setBorder(new BevelBorder(1, Color.white, Color.white));
@@ -495,6 +523,11 @@ public void actionPerformed(ActionEvent e) {
 		System.out.println("Right");
 		player = movableRight;
 		player.setBackground(Color.cyan);
+		ImageIcon coin = new ImageIcon("REEEEEE.png");
+		Image ing = coin.getImage();
+		Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+		coin = new ImageIcon(newing);
+		player.setIcon(coin);
 		player.setOpaque(true);
 		player.setBorderPainted(false);
 		getPlayerPosition(player, position+1);
@@ -503,6 +536,7 @@ public void actionPerformed(ActionEvent e) {
 		 goblinAmbush++;
 	}
 	else if(e.getSource() == movableNE) {
+		tiles[position].setIcon(null);
 		tiles[position].setBackground(Color.white);
 		for(int i = 0; i < 45; i++) {
 			tiles[i].setBorder(new BevelBorder(1, Color.white, Color.white));
@@ -511,6 +545,11 @@ public void actionPerformed(ActionEvent e) {
 		System.out.println("NE");
 		player = movableNE;
 		player.setBackground(Color.cyan);
+		ImageIcon coin = new ImageIcon("REEEEEE.png");
+		Image ing = coin.getImage();
+		Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+		coin = new ImageIcon(newing);
+		player.setIcon(coin);
 		player.setOpaque(true);
 		player.setBorderPainted(false);
 		getPlayerPosition(player, position-8);
@@ -519,6 +558,7 @@ public void actionPerformed(ActionEvent e) {
 		 goblinAmbush++;
 	}
 	else if(e.getSource() == movableNW) {
+		tiles[position].setIcon(null);
 		tiles[position].setBackground(Color.white);
 		for(int i = 0; i < 45; i++) {
 			tiles[i].setBorder(new BevelBorder(1, Color.white, Color.white));
@@ -527,6 +567,11 @@ public void actionPerformed(ActionEvent e) {
 		System.out.println("NW");
 		player = movableNW;
 		player.setBackground(Color.cyan);
+		ImageIcon coin = new ImageIcon("REEEEEE.png");
+		Image ing = coin.getImage();
+		Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+		coin = new ImageIcon(newing);
+		player.setIcon(coin);
 		player.setOpaque(true);
 		player.setBorderPainted(false);
 		getPlayerPosition(player, position-10);
@@ -536,6 +581,7 @@ public void actionPerformed(ActionEvent e) {
 
 	}
 	else if(e.getSource() == movableSW) {
+		tiles[position].setIcon(null);
 		tiles[position].setBackground(Color.white);
 		for(int i = 0; i < 45; i++) {
 			tiles[i].setBorder(new BevelBorder(1, Color.white, Color.white));
@@ -544,6 +590,11 @@ public void actionPerformed(ActionEvent e) {
 		System.out.println("SW");
 		player = movableSW;
 		player.setBackground(Color.cyan);
+		ImageIcon coin = new ImageIcon("REEEEEE.png");
+		Image ing = coin.getImage();
+		Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+		coin = new ImageIcon(newing);
+		player.setIcon(coin);
 		player.setOpaque(true);
 		player.setBorderPainted(false);
 		getPlayerPosition(player, position+8);
@@ -552,6 +603,7 @@ public void actionPerformed(ActionEvent e) {
 		 goblinAmbush++;
 	}
 		else if(e.getSource() == movableSE) {
+			tiles[position].setIcon(null);
 			tiles[position].setBackground(Color.white);
 			for(int i = 0; i < 45; i++) {
 				tiles[i].setBorder(new BevelBorder(1, Color.white, Color.white));
@@ -560,6 +612,11 @@ public void actionPerformed(ActionEvent e) {
 			System.out.println("SE");
 			player = movableSE;
 			player.setBackground(Color.cyan);
+			ImageIcon coin = new ImageIcon("REEEEEE.png");
+			Image ing = coin.getImage();
+			Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+			coin = new ImageIcon(newing);
+			player.setIcon(coin);
 			player.setOpaque(true);
 			player.setBorderPainted(false);
 			getPlayerPosition(player, position+10);
@@ -571,7 +628,7 @@ public void actionPerformed(ActionEvent e) {
 			System.out.println("You can't move that far!");
 		}
 	}
-	 if(remainingGoblins == 0) {
+	 if(remainingGoblins <= 0) {
 		 goblinAmbush = 0;
 	 }
 	}
@@ -598,7 +655,7 @@ public void keyPressed(KeyEvent e) {
 		
 	}
 	else if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-		JOptionPane.showMessageDialog(null, "You have " + smokeBombs + " smoke bombs, " + freezePotions + " freeze potions, and " + spareHearts + " spare hearts");
+		JOptionPane.showMessageDialog(null, "You have " + freezePotions + " freeze potions and " + spareHearts + " spare hearts");
 	}
 	if(e.getKeyCode() == KeyEvent.VK_6) {
 		gamer = true;
