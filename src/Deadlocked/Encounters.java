@@ -188,11 +188,12 @@ public class Encounters implements ActionListener {
 	void getNewTraderLocation() {
 		System.out.println("yeet");
 		int numberOfTraders = 0;
-		for(int i = 0; i <45; i++) {
+		for(int i = 0; i <44; i++) {
 			if(Deadlocked.tiles[i].getBackground() == Color.PINK) {
 				numberOfTraders++;
 				if(numberOfTraders > 1) {
 					Deadlocked.tiles[i].setBackground(Color.white);
+					Deadlocked.tiles[i].setIcon(null);
 					numberOfTraders--;
 					System.out.println("fat yeet");
 				}
@@ -204,11 +205,15 @@ public class Encounters implements ActionListener {
 			Random reee = new Random();
 			while(!traderSet) {
 				System.out.println("ascended yeet");
-				int ahhh = reee.nextInt(45);
-				for(int i = 0; i < 45; i++) {
+				int ahhh = reee.nextInt(44);
+				for(int i = 0; i < 44; i++) {
 					if(ahhh == i && Deadlocked.tiles[i].getBackground() == Color.white && i != traderPosition) {
 						traderPosition = i;
-						System.out.println("Why is this not working lul");
+						ImageIcon merchant = new ImageIcon("merchantSprite.png");
+						Image ing = merchant.getImage();
+						Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+						merchant = new ImageIcon(newing);
+						Deadlocked.tiles[i].setIcon(merchant);
 						Deadlocked.tiles[i].setBackground(Color.PINK);
 						traderSet = true;
 					}
@@ -473,7 +478,7 @@ void shopping() {
 			   gold-=5;
 		   }
 	   }
-	   else if(reee.equalsIgnoreCase("PizzaTime")) {
+	  /* else if(reee.equalsIgnoreCase("PizzaTime")) {
 		   String pepe = JOptionPane.showInputDialog("Are you sure you want to initiate Pizza Time? Yes or No");
 		   if(pepe.equalsIgnoreCase("Yes")) {
 			   JOptionPane.showMessageDialog(null, "Very well then. Bagels");
@@ -484,6 +489,7 @@ void shopping() {
 			   gold+= 10000;
 		   }
 	   }
+	   */
 
 	  String aghjrfdsjahflke = JOptionPane.showInputDialog("Would you like to keep shopping? Yes or No");
 	  if(aghjrfdsjahflke == null) {

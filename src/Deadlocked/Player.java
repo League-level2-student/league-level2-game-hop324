@@ -41,7 +41,7 @@ void getPlayerPosition(JButton gamer, int index) {
 
 void getMovableSpaces(int ahhh) {
 	ahhh = position;
-	if(position > 9) {
+	if(position >= 9) {
 	movableUp = Deadlocked.tiles[position-9];
 	}
 	if(position < 36) {
@@ -107,7 +107,7 @@ void getMovableSpaces(int ahhh) {
 		Deadlocked.tiles[position-9].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
 		Deadlocked.tiles[position-8].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
 	}
-	else if(position% 9 == 0) {
+	else if(position == 9) {
 		Deadlocked.tiles[position-9].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
 		Deadlocked.tiles[position-8].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
 		Deadlocked.tiles[position+9].setBorder(new BevelBorder(1, Color.yellow, Color.yellow));
