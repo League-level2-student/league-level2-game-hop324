@@ -24,7 +24,6 @@ public class Encounters implements ActionListener {
 	public int AC = 10;
 	public int damage = 1;
 	public int gold = 0;
-	public int smokeBombs = 0;
 	public int spareHearts = 0;
 	public int freezePotions = 0;
 	
@@ -44,7 +43,7 @@ public class Encounters implements ActionListener {
 	public double goblinDTracker;
 	
 	public JButton useFreeze;
-	public JButton useSmoke;
+
 	
 	int goblinTiles = 12;
 	public int remainingGoblins = 12;
@@ -97,7 +96,7 @@ public class Encounters implements ActionListener {
 				else if(tileDecider == 1 && goldTiles > 0) {
 					goldTiles--;
 					Deadlocked.tiles[tracker].setBackground(Color.yellow);
-					ImageIcon coin = new ImageIcon("coinSprite.png");
+					ImageIcon coin =new ImageIcon(getClass().getResource("coinSprite.png"));
 					Image ing = coin.getImage();
 					Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 					coin = new ImageIcon(newing);
@@ -111,7 +110,7 @@ public class Encounters implements ActionListener {
 				else if(tileDecider == 2 && dragonTile > 0) {
 					dragonTile--;
 					Deadlocked.tiles[tracker].setBackground(Color.red);
-					ImageIcon coin = new ImageIcon("dragonSprite.png");
+					ImageIcon coin =new ImageIcon(getClass().getResource("dragonSprite.png"));
 					Image ing = coin.getImage();
 					Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 					coin = new ImageIcon(newing);
@@ -125,7 +124,7 @@ public class Encounters implements ActionListener {
 				else if(tileDecider == 3 && goblinTiles > 0) {
 					goblinTiles--;
 					Deadlocked.tiles[tracker].setBackground(Color.green);
-					ImageIcon goblin = new ImageIcon("gerbleSprite.png");
+					ImageIcon goblin =new ImageIcon(getClass().getResource("gerbleSprite.png"));
 					Image ing = goblin.getImage();
 					Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 					goblin = new ImageIcon(newing);
@@ -139,7 +138,7 @@ public class Encounters implements ActionListener {
 				else if(tileDecider == 4 && weaponTiles > 0) {
 					weaponTiles--;
 					Deadlocked.tiles[tracker].setBackground(Color.gray);
-					ImageIcon weapon = new ImageIcon("weaponSprite.png");
+					ImageIcon weapon =new ImageIcon(getClass().getResource("weaponSprite.png"));
 					Image ing = weapon.getImage();
 					Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 					weapon = new ImageIcon(newing);
@@ -153,7 +152,7 @@ public class Encounters implements ActionListener {
 				else if(tileDecider == 5 && magicItemTiles > 0) {
 					magicItemTiles--;
 					Deadlocked.tiles[tracker].setBackground(Color.blue);
-					ImageIcon coin = new ImageIcon("magicItem.png");
+					ImageIcon coin =new ImageIcon(getClass().getResource("magicItem.png"));
 					Image ing = coin.getImage();
 					Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 					coin = new ImageIcon(newing);
@@ -168,7 +167,7 @@ public class Encounters implements ActionListener {
 					traderTile--;
 					Deadlocked.tiles[tracker].setBackground(Color.PINK);
 					traderPosition = tracker;
-					ImageIcon merchant = new ImageIcon("merchantSprite.png");
+					ImageIcon merchant =new ImageIcon(getClass().getResource("merchantSprite.png"));
 					Image ing = merchant.getImage();
 					Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 					merchant = new ImageIcon(newing);
@@ -186,6 +185,7 @@ public class Encounters implements ActionListener {
 	}
 	
 	void getNewTraderLocation() {
+		Deadlocked.tiles[traderPosition].setBackground(Color.white);
 		System.out.println("yeet");
 		int numberOfTraders = 0;
 		for(int i = 0; i <44; i++) {
@@ -200,7 +200,7 @@ public class Encounters implements ActionListener {
 				
 			}
 		}
-		if(numberOfTraders <= 1) {
+		if(numberOfTraders <= 0) {
 			System.out.println("Fattest yeet");
 			Random reee = new Random();
 			while(!traderSet) {
@@ -209,7 +209,7 @@ public class Encounters implements ActionListener {
 				for(int i = 0; i < 44; i++) {
 					if(ahhh == i && Deadlocked.tiles[i].getBackground() == Color.white && i != traderPosition) {
 						traderPosition = i;
-						ImageIcon merchant = new ImageIcon("merchantSprite.png");
+						ImageIcon merchant =new ImageIcon(getClass().getResource("merchantSprite.png"));
 						Image ing = merchant.getImage();
 						Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 						merchant = new ImageIcon(newing);
@@ -318,8 +318,8 @@ public class Encounters implements ActionListener {
 			  freezePotions++;
 		  }
 		  else if(treasure == 2) {
-			  System.out.println("Wow! You found a treasure chest! Inside is a Smoke Bomb!");
-			  smokeBombs++;
+			  System.out.println("Wow! You found a treasure chest! Inside is a Freeze Potion!");
+			  freezePotions++;
 		  }
 			if(Deadlocked.goblinAmbush >= 5) {
 				JOptionPane.showMessageDialog(null, "You waited too long! The goblins ambush you");
@@ -445,6 +445,9 @@ void shopping() {
 			}
 		   gold-=10;
 	   }
+	   else if(reee.equalsIgnoreCase("Magic Items" ) && gold <= 10) {
+		   System.out.println("Sorry, you don't have enough gold for that.");
+	   }
 	   else if(reee.equalsIgnoreCase("Weapons")) {
 		   String pepe = JOptionPane.showInputDialog("Sure! Would you like a Sword(5G), Axe(10G), or Bow(7G)");
 		   if(pepe.equalsIgnoreCase("Sword") && gold >= 5) {
@@ -452,30 +455,41 @@ void shopping() {
 			   damage = 5;
 			   gold-=5;
 		   }
+		   else if(reee.equalsIgnoreCase("Sword" ) && gold <= 5) {
+			   System.out.println("Sorry, you don't have enough gold for that.");
+		   }
 		   else if(pepe.equalsIgnoreCase("Axe") && gold >= 10) {
 			   damage = 10;
 			   gold-=10;
+		   }
+		   else if(reee.equalsIgnoreCase("Axe" ) && gold <= 10) {
+			   System.out.println("Sorry, you don't have enough gold for that.");
 		   }
 		   else if(pepe.equalsIgnoreCase("Bow") && gold >= 6) {
 			   damage = 7;
 			   gold-=10;
 		   }
+		   else if(reee.equalsIgnoreCase("Bow" ) && gold <= 6) {
+			   System.out.println("Sorry, you don't have enough gold for that.");
+		   }
 	   }
 	   else if(reee.equalsIgnoreCase("Equipment")) {
-		   String pepe = JOptionPane.showInputDialog("Sure! Which'd you like? Smoke Bomb(5G), Spare Heart(20G), or Freeze Potion(5G)?");
-		   if(pepe.equalsIgnoreCase("Smoke Bomb") && gold >= 5) {
-			   System.out.println("You got a Smoke Bomb!");
-			   smokeBombs++;
-		   }
-		   else if(pepe.equalsIgnoreCase("Spare Heart") && gold >= 20) {
+		   String pepe = JOptionPane.showInputDialog("Sure! Which'd you like? Spare Heart(20G) or Freeze Potion(5G)?");
+		   if(pepe.equalsIgnoreCase("Spare Heart") && gold >= 20) {
 			   spareHearts++;
 			   System.out.println("You got a Spare Heart!");
 			   gold-=20;
+		   }
+		   else if(reee.equalsIgnoreCase("Spare Heart" ) && gold <= 20) {
+			   System.out.println("Sorry, you don't have enough gold for that.");
 		   }
 		   else if(pepe.equalsIgnoreCase("Freeze Potion") && gold >= 5) {
 			   System.out.println("You got a Freeze Potion");
 			   freezePotions++;
 			   gold-=5;
+		   }
+		   else if(reee.equalsIgnoreCase("Freeze Potion" ) && gold <= 5) {
+			   System.out.println("Sorry, you don't have enough gold for that.");
 		   }
 	   }
 	  /* else if(reee.equalsIgnoreCase("PizzaTime")) {
