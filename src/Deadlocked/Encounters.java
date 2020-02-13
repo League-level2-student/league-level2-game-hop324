@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class Encounters implements ActionListener {
 	
@@ -67,6 +69,9 @@ public class Encounters implements ActionListener {
 	public double dragonAM = 1.0;
 	public int dragonD = 35;
 	
+	public static JTextArea battleLog = new JTextArea(10, 40);
+	public static JScrollPane painTwo = new JScrollPane(battleLog);
+	
 	
 	void getTiles() {
 		if(goblinTiles == 0 && dragonTile == 0 && normalTiles == 0 && goldTiles == 0 && weaponTiles == 0 && magicItemTiles == 0) {
@@ -76,7 +81,7 @@ public class Encounters implements ActionListener {
 			for(int i = 0; i < 45; i++) {
 				if(goblinTiles == 0 && dragonTile == 0 && normalTiles == 0 && goldTiles == 0 && weaponTiles == 0 && magicItemTiles == 0 && traderTile == 0) {
 					i = 45;
-					System.out.println("YEETUS");
+					Deadlocked.log.append("YEETUS" + "\n");
 				}
 			tileDecider = randy.nextInt(7);
 				if(tracker == 18) {
@@ -186,7 +191,7 @@ public class Encounters implements ActionListener {
 	
 	void getNewTraderLocation() {
 		Deadlocked.tiles[traderPosition].setBackground(Color.white);
-		System.out.println("yeet");
+		Deadlocked.log.append("yeet" + "\n");
 		int numberOfTraders = 0;
 		for(int i = 0; i <44; i++) {
 			if(Deadlocked.tiles[i].getBackground() == Color.PINK) {
@@ -195,16 +200,16 @@ public class Encounters implements ActionListener {
 					Deadlocked.tiles[i].setBackground(Color.white);
 					Deadlocked.tiles[i].setIcon(null);
 					numberOfTraders--;
-					System.out.println("fat yeet");
+					Deadlocked.log.append("fat yeet" + "\n");
 				}
 				
 			}
 		}
 		if(numberOfTraders <= 0) {
-			System.out.println("Fattest yeet");
+			Deadlocked.log.append("Fattest yeet" + "\n");
 			Random reee = new Random();
 			while(!traderSet) {
-				System.out.println("ascended yeet");
+				Deadlocked.log.append("ascended yeet" + "\n");
 				int ahhh = reee.nextInt(44);
 				for(int i = 0; i < 44; i++) {
 					if(ahhh == i && Deadlocked.tiles[i].getBackground() == Color.white && i != traderPosition) {
@@ -225,26 +230,24 @@ public class Encounters implements ActionListener {
 	void getResource(int pos) {
 		if(Deadlocked.tiles[pos].getBackground() == Color.white) {
 			if(Deadlocked.goblinAmbush >= 5) {
-				JOptionPane.showMessageDialog(null, "You waited too long! The goblins ambush you");
+				JOptionPane.showMessageDialog(null, "You waited too long! The goblins ambush you" + "\n");
 				gerbleEncounter();
 				remainingGoblins++;
 			}
 		}
 		else if(Deadlocked.tiles[pos].getBackground() == Color.blue){
-			
-			System.out.println("Stinky");
 			Random heh = new Random();
 			int decider = heh.nextInt(3);
 			if(decider == 0) {
-				System.out.println("You got some magic armor!");
+				Deadlocked.log.append("You got some magic armor!" + "\n");
 				AC += 3;
 			}
 			else if(decider == 1) {
-				System.out.println("You got a potion of strength!");
+				Deadlocked.log.append("You got a potion of strength!" + "\n");
 				AM += .5;
 			}
 			else if(decider == 2) {
-				System.out.println("You got a potion of health!");
+				Deadlocked.log.append("You got a potion of health!" + "\n");
 				HP += 10;
 				maxHP +=10;
 			}
@@ -262,32 +265,32 @@ public class Encounters implements ActionListener {
 				Random heh = new Random();
 				int decider = heh.nextInt(3);
 				if(decider == 0) {
-					System.out.println("You got a Sword");
+					Deadlocked.log.append("You got a Sword" + "\n");
 					if(damage < 5) {
 						damage = 5;
 					}
 					else {
-						System.out.println("You scrap it for 3G");
+						Deadlocked.log.append("You scrap it for 3G" + "\n");
 						gold+=3;
 					}
 				}
 				else if(decider == 1) {
-					System.out.println("You got an Axe");
+					Deadlocked.log.append("You got an Axe" + "\n");
 					if(damage < 10) {
 						damage = 10;
 					}
 					else {
-						System.out.println("You scrap it for 6G");
+						Deadlocked.log.append("You scrap it for 6G" + "\n");
 						gold+=6;
 					}
 				}
 				else if(decider == 2) {
-					System.out.println("You got a Bow");
+					Deadlocked.log.append("You got a Bow" + "\n");
 					if(damage < 6) {
 						damage = 7;
 					}
 					else {
-						System.out.println("You scrap it for 6G");
+						Deadlocked.log.append("You scrap it for 6G" + "\n");
 						gold+=6;
 					}
 				}
@@ -306,19 +309,19 @@ public class Encounters implements ActionListener {
 		  Random ehh = new Random();
 		  int monay = ehh.nextInt(7)+3;
 		  gold+=monay;
-		  System.out.println("You found " + monay + " gold");
+		  Deadlocked.log.append("You found " + monay + " gold" + "\n");
 		  Random jeff = new Random();
 		  int treasure = jeff.nextInt(25);
 		  if(treasure == 0) {
-			  System.out.println("Wow! You found a treasure chest! Inside is a Spare Heart!");
+			  Deadlocked.log.append("Wow! You found a treasure chest! Inside is a Spare Heart!" + "\n");
 			  spareHearts++;
 		  }
 		  else if(treasure == 1) {
-			  System.out.println("Wow! You found a treasure chest! Inside is a Freeze Potion!");
+			  Deadlocked.log.append("Wow! You found a treasure chest! Inside is a Freeze Potion!" + "\n");
 			  freezePotions++;
 		  }
 		  else if(treasure == 2) {
-			  System.out.println("Wow! You found a treasure chest! Inside is a Freeze Potion!");
+			  Deadlocked.log.append("Wow! You found a treasure chest! Inside is a Freeze Potion!" + "\n");
 			  freezePotions++;
 		  }
 			if(Deadlocked.goblinAmbush >= 5) {
@@ -390,7 +393,7 @@ public class Encounters implements ActionListener {
 			useFreeze.setText("Use Freeze Potion");
 			UI.add(useFreeze);
 		}
-
+		UI.add(painTwo);
 		battleField.setVisible(true);
 	}
 
@@ -431,65 +434,65 @@ void shopping() {
 	   if(reee.equalsIgnoreCase("Magic Items" ) && gold >= 10) {
 		   String pepe = JOptionPane.showInputDialog("Sure, they all cost 10 gold! Which'd you like? Magic Armor, Potion of Strength, or Potion of Health?");
 		   if(pepe.equalsIgnoreCase("Magic Armor")) {
-			   System.out.println("You got some magic armor!");
+			   Deadlocked.log.append("You got some magic armor!" + "\n");
 				AC += 3;
 		   	}
 		   else if(pepe.equalsIgnoreCase("Potion of Strength")) {
-			   System.out.println("You got a potion of strength!");
+			   Deadlocked.log.append("You got a potion of strength!" + "\n");
 				AM += .5;
 		   	}
 			else if(pepe.equalsIgnoreCase("Potion of Health")) {
-				System.out.println("You got a potion of health!");
+				Deadlocked.log.append("You got a potion of health!" + "\n");
 				HP += 10;
 				maxHP +=10;
 			}
 		   gold-=10;
 	   }
 	   else if(reee.equalsIgnoreCase("Magic Items" ) && gold <= 10) {
-		   System.out.println("Sorry, you don't have enough gold for that.");
+		   Deadlocked.log.append("Sorry, you don't have enough gold for that." + "\n");
 	   }
 	   else if(reee.equalsIgnoreCase("Weapons")) {
 		   String pepe = JOptionPane.showInputDialog("Sure! Would you like a Sword(5G), Axe(10G), or Bow(7G)");
 		   if(pepe.equalsIgnoreCase("Sword") && gold >= 5) {
-			   System.out.println("You got a sword!");
+			   Deadlocked.log.append("You got a sword!" + "\n");
 			   damage = 5;
 			   gold-=5;
 		   }
 		   else if(reee.equalsIgnoreCase("Sword" ) && gold <= 5) {
-			   System.out.println("Sorry, you don't have enough gold for that.");
+			   Deadlocked.log.append("Sorry, you don't have enough gold for that." + "\n");
 		   }
 		   else if(pepe.equalsIgnoreCase("Axe") && gold >= 10) {
 			   damage = 10;
 			   gold-=10;
 		   }
 		   else if(reee.equalsIgnoreCase("Axe" ) && gold <= 10) {
-			   System.out.println("Sorry, you don't have enough gold for that.");
+			   Deadlocked.log.append("Sorry, you don't have enough gold for that." + "\n");
 		   }
 		   else if(pepe.equalsIgnoreCase("Bow") && gold >= 6) {
 			   damage = 7;
 			   gold-=10;
 		   }
 		   else if(reee.equalsIgnoreCase("Bow" ) && gold <= 6) {
-			   System.out.println("Sorry, you don't have enough gold for that.");
+			   Deadlocked.log.append("Sorry, you don't have enough gold for that." + "\n");
 		   }
 	   }
 	   else if(reee.equalsIgnoreCase("Equipment")) {
 		   String pepe = JOptionPane.showInputDialog("Sure! Which'd you like? Spare Heart(20G) or Freeze Potion(5G)?");
 		   if(pepe.equalsIgnoreCase("Spare Heart") && gold >= 20) {
 			   spareHearts++;
-			   System.out.println("You got a Spare Heart!");
+			   Deadlocked.log.append("You got a Spare Heart!" + "\n");
 			   gold-=20;
 		   }
 		   else if(reee.equalsIgnoreCase("Spare Heart" ) && gold <= 20) {
-			   System.out.println("Sorry, you don't have enough gold for that.");
+			   Deadlocked.log.append("Sorry, you don't have enough gold for that." + "\n");
 		   }
 		   else if(pepe.equalsIgnoreCase("Freeze Potion") && gold >= 5) {
-			   System.out.println("You got a Freeze Potion");
+			   Deadlocked.log.append("You got a Freeze Potion" + "\n");
 			   freezePotions++;
 			   gold-=5;
 		   }
 		   else if(reee.equalsIgnoreCase("Freeze Potion" ) && gold <= 5) {
-			   System.out.println("Sorry, you don't have enough gold for that.");
+			   Deadlocked.log.append("Sorry, you don't have enough gold for that." + "\n");
 		   }
 	   }
 	  /* else if(reee.equalsIgnoreCase("PizzaTime")) {
@@ -517,7 +520,7 @@ void shopping() {
 	  }
 	
 	  
-	   System.out.println("Thanks for shopping!");
+	   Deadlocked.log.append("Thanks for shopping!" + "\n");
 	   traderSet = false;
 	   getNewTraderLocation();
 		if(Deadlocked.goblinAmbush >= 5) {

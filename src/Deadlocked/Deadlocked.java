@@ -13,6 +13,7 @@ import javax.swing.border.BevelBorder;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -46,10 +47,10 @@ public class Deadlocked extends Player implements KeyListener  {
 	
 	//GameScreen Stuff Start
 	public static JFrame map = new JFrame();
-	JPanel setup = new JPanel();
+	public static JPanel setup = new JPanel();
 	public static JButton[] tiles = new JButton[45];
-	JTextArea log = new JTextArea();
-	JScrollPane pain = new JScrollPane(log);
+	public static JTextArea log = new JTextArea(25, 130);
+	public static JScrollPane pain;
 	
 	
 	
@@ -85,10 +86,13 @@ void createGameUI() {
 			setup.add(tiles[i]);
 		
 		}
+		pain = new JScrollPane(log);
+		pain.setPreferredSize(new Dimension(1920, 200));
 		log.setEditable(false);
 		pain.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		setup.add(pain);
-		log.setPreferredSize(new Dimension(1800, 300));
+		//log.setFont("Arial", Font.BOLD, 16););
+		//log.setPreferredSize(new Dimension(1800, 300));
 		getMovableSpaces(18);
 		getTiles();
 		map.addKeyListener(this);
@@ -174,9 +178,12 @@ public void actionPerformed(ActionEvent e) {
 				dragonD = 35;
 			}
 			dragonHP = dragonHP-((AM*damage)-dragonAC);
-			log.append(" You dealt: " + ((AM*damage)-dragonAC) + " damage." + "\n");
+			battleLog.append(" You dealt: " + ((AM*damage)-dragonAC) + " damage." + "\n");
 			if(dragonHP <= 0) {
-				log.append(" You killed the dragon! You win!" + "\n");
+				battleLog.append(" You killed the dragon! You win!" + "\n");
+				String logTracker = battleLog.getText();
+				battleLog.setText("");
+				log.append(logTracker + "\n");
 				battleField.dispose();
 				map.dispose();
 				}
@@ -185,26 +192,26 @@ public void actionPerformed(ActionEvent e) {
 			if(attack == 0) {
 				if(dragonAM > 0) {
 				HP = HP-((dragonD*dragonAM)-AC);
-				log.append(" The dragon hits you with it's claws and does " + ((dragonD*dragonAM)-AC) + " damage" + "\n");
+				battleLog.append(" The dragon hits you with it's claws and does " + ((dragonD*dragonAM)-AC) + " damage" + "\n");
 				}
 			}
 			else if(attack == 1) {
-				log.append(" The dragon sharpens it's claws" + "\n");
+				battleLog.append(" The dragon sharpens it's claws" + "\n");
 				dragonAM+=.25;
 			}
 			else if(attack == 2) {
-				log.append(" The dragon uses it's flame breath! It deals " + (30-AC) + " damage and melts some of your armor" + "\n");
+				battleLog.append(" The dragon uses it's flame breath! It deals " + (30-AC) + " damage and melts some of your armor" + "\n");
 				HP = HP-=30;
 				AC-=3;
 			}
 			else if(attack == 3) {
-				log.append(" The dragon covers it's scales in treasure to increase it's armor" + "\n");
+				battleLog.append(" The dragon covers it's scales in treasure to increase it's armor" + "\n");
 				dragonAC+=5;
 			}
 				freezeActive = false;
 				
 			if(HP <=0 && spareHearts <= 0) {
-					log.append(" You died!" + "\n");
+					battleLog.append(" You died!" + "\n");
 					map.dispose();
 					battleField.dispose();
 		}
@@ -245,9 +252,9 @@ public void actionPerformed(ActionEvent e) {
 			goblinD = 0;
 		}
 		goblin1HP = goblin1HP-(AM*damage);
-		log.append(" You dealt: " + (AM*damage) + " damage." + "\n");
+		battleLog.append(" You dealt: " + (AM*damage) + " damage." + "\n");
 		if(goblin1HP <= 0) {
-			log.append(" You killed a goblin!" + "\n");
+			battleLog.append(" You killed a goblin!" + "\n");
 			goblinCount--;
 			UI.remove(goblin1);
 			randomDrop(1);
@@ -255,28 +262,31 @@ public void actionPerformed(ActionEvent e) {
 				if(freezePotions > 0) {
 				UI.remove(useFreeze);
 				}
+				String logTracker = battleLog.getText();
+				battleLog.setText("");
+				log.append(logTracker + "\n");
 				battleField.dispose();
 				remainingGoblins--;
 				if(remainingGoblins == 0) {
 					JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
 				}
-				log.append(" You won!" + "\n");
+				battleLog.append(" You won!" + "\n");
 				randomDrop(2);
 				map.setVisible(true);
 			}
 			}
 			HP = HP-(goblinCount*goblinD);
-			log.append(" You took: " + goblinCount*goblinD + " damage" + "\n");
+			battleLog.append(" You took: " + goblinCount*goblinD + " damage" + "\n");
 			freezeActive = false;
 			goblinD = goblinDTracker;
 			if(HP <=0 && spareHearts <= 0) {
-				log.append(" You died!" + "\n");
+				battleLog.append(" You died!" + "\n");
 				map.dispose();
 				battleField.dispose();
 		}
 			else if(HP <= 0 && spareHearts > 0) {
 				spareHearts--;
-				log.append(" Your spare heart brought you back to life!" + "\n");
+				battleLog.append(" Your spare heart brought you back to life!" + "\n");
 				HP = maxHP;
 			}
 	}
@@ -285,38 +295,41 @@ public void actionPerformed(ActionEvent e) {
 			goblinD = 0;
 		}
 		goblin2HP = goblin2HP-(AM*damage);
-		log.append(" You dealt: " + (AM*damage) + " damage." + "\n");
+		battleLog.append(" You dealt: " + (AM*damage) + " damage." + "\n");
 		if(goblin2HP <= 0) {
-			log.append(" You killed a goblin!" + "\n");
+			battleLog.append(" You killed a goblin!" + "\n");
 			goblinCount--;
 			UI.remove(goblin2);
 			randomDrop(1);
 			if(goblinCount == 0) {
 				battleField.dispose();
 				remainingGoblins--;
+				String logTracker = battleLog.getText();
+				battleLog.setText("");
+				log.append(logTracker + "\n");
 				if(remainingGoblins == 0) {
 					JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
 				}
-				log.append(" You won!" + "\n");
+				battleLog.append(" You won!" + "\n");
 				randomDrop(2);
 				map.setVisible(true);
 			}
 			}
 			HP = HP-(goblinCount*goblinD);
-			log.append(" You took: " + goblinCount*goblinD + " damage" + "\n");
+			battleLog.append(" You took: " + goblinCount*goblinD + " damage" + "\n");
 			freezeActive = false;
 			goblinD = goblinDTracker;
 			if(HP <=0 && spareHearts <= 0) {
 				if(freezePotions > 0) {
 				UI.remove(useFreeze);
 				}
-				log.append(" You died!" + "\n");
+				battleLog.append(" You died!" + "\n");
 				map.dispose();
 				battleField.dispose();
 		}
 			else if(HP <= 0 && spareHearts > 0) {
 				spareHearts--;
-				log.append(" Your spare heart brought you back to life!" + "\n");
+				battleLog.append(" Your spare heart brought you back to life!" + "\n");
 				HP = maxHP;
 			}
 	}
@@ -325,10 +338,10 @@ public void actionPerformed(ActionEvent e) {
 			goblinD = 0;
 		}
 		goblin3HP = goblin3HP-(AM*damage);
-		log.append(" You dealt: " + (AM*damage) + " damage." + "\n");
+		battleLog.append(" You dealt: " + (AM*damage) + " damage." + "\n");
 		goblinD = 3;
 		if(goblin3HP <= 0) {
-			log.append(" You killed a goblin!" + "\n");
+			battleLog.append(" You killed a goblin!" + "\n");
 			goblinCount--;
 			UI.remove(goblin3);
 			randomDrop(1);
@@ -336,31 +349,34 @@ public void actionPerformed(ActionEvent e) {
 				if(freezePotions > 0) {
 				UI.remove(useFreeze);
 				}
+				String logTracker = battleLog.getText();
+				battleLog.setText("");
+				log.append(logTracker + "\n");
 				battleField.dispose();
 				remainingGoblins--;
 				if(remainingGoblins == 0) {
 					JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
 				}
-				log.append(" You won!" + "\n");
+				battleLog.append(" You won!" + "\n");
 				randomDrop(2);
 				map.setVisible(true);
 			}
 			}
 			HP = HP-(goblinCount*goblinD);
-			log.append(" You took: " + goblinCount*goblinD + " damage" + "\n");
+			battleLog.append(" You took: " + goblinCount*goblinD + " damage" + "\n");
 			freezeActive = false;
 			goblinD = goblinDTracker;
 			if(HP <=0 && spareHearts <= 0) {
 				if(freezePotions > 0) {
 				UI.remove(useFreeze);
 				}
-				log.append(" You died!" + "\n");
+				battleLog.append(" You died!" + "\n");
 				map.dispose();
 				battleField.dispose();
 		}
 			else if(HP <= 0 && spareHearts > 0) {
 				spareHearts--;
-				log.append(" Your spare heart brought you back to life!" + "\n");
+				battleLog.append(" Your spare heart brought you back to life!" + "\n");
 				HP = maxHP;
 			}
 	}
@@ -369,13 +385,16 @@ public void actionPerformed(ActionEvent e) {
 			goblinD = 0;
 		}
 		goblin4HP = goblin4HP-(AM*damage);
-		log.append(" You dealt: " + (AM*damage) + " damage." + "\n");
+		battleLog.append(" You dealt: " + (AM*damage) + " damage." + "\n");
 		if(goblin4HP <= 0) {
-			log.append(" You killed a goblin!" + "\n");
+			battleLog.append(" You killed a goblin!" + "\n");
 			goblinCount--;
 			UI.remove(goblin4);
 			randomDrop(1);
 			if(goblinCount == 0) {
+				String logTracker = battleLog.getText();
+				battleLog.setText("");
+				log.append(logTracker + "\n");
 				if(freezePotions > 0) {
 				UI.remove(useFreeze);
 				}
@@ -384,23 +403,23 @@ public void actionPerformed(ActionEvent e) {
 				if(remainingGoblins == 0) {
 					JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
 				}
-				log.append(" You won!" + "\n");
+				battleLog.append(" You won!" + "\n");
 				randomDrop(2);
 				map.setVisible(true);
 			}
 			}
 			HP = HP-(goblinCount*goblinD);
-			log.append(" You took: " + goblinCount*goblinD + " damage" + "\n");
+			battleLog.append(" You took: " + goblinCount*goblinD + " damage" + "\n");
 			freezeActive = false;
 			goblinD = goblinDTracker;
 			if(HP <=0 && spareHearts <= 0) {
-				log.append(" You died!" + "\n");
+				battleLog.append(" You died!" + "\n");
 				map.dispose();
 				battleField.dispose();
 		}
 			else if(HP <= 0 && spareHearts > 0) {
 				spareHearts--;
-				log.append(" Your spare heart brought you back to life!" + "\n");
+				battleLog.append(" Your spare heart brought you back to life!" + "\n");
 				HP = maxHP;
 			}
 	}
@@ -409,13 +428,16 @@ public void actionPerformed(ActionEvent e) {
 			goblinD = 0;
 		}
 		goblin5HP = goblin5HP-(AM*damage);
-		log.append(" You dealt: " + (AM*damage) + " damage." + "\n");
+		battleLog.append(" You dealt: " + (AM*damage) + " damage." + "\n");
 		if(goblin5HP <= 0) {
-			log.append(" You killed a goblin!" + "\n");
+			battleLog.append(" You killed a goblin!" + "\n");
 			goblinCount--;
 			UI.remove(goblin5);
 			randomDrop(1);
 			if(goblinCount == 0) {
+				String logTracker = battleLog.getText();
+				battleLog.setText("");
+				log.append(logTracker + "\n");
 				if(freezePotions > 0) {
 				UI.remove(useFreeze);
 				}
@@ -424,28 +446,28 @@ public void actionPerformed(ActionEvent e) {
 				if(remainingGoblins == 0) {
 					JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
 				}
-				log.append(" You won!" + "\n");
+				battleLog.append(" You won!" + "\n");
 				randomDrop(2);
 				map.setVisible(true);
 			}
 			}
 			HP = HP-(goblinCount*goblinD);
-			log.append(" You took: " + goblinCount*goblinD + " damage" + "\n");
+			battleLog.append(" You took: " + goblinCount*goblinD + " damage" + "\n");
 			freezeActive = false;
 			goblinD = goblinDTracker;
 			if(HP <=0 && spareHearts <= 0) {
-				log.append(" You died!" + "\n");
+				battleLog.append(" You died!" + "\n");
 				map.dispose();
 				battleField.dispose();
 		}
 			else if(HP <= 0 && spareHearts > 0) {
 				spareHearts--;
-				log.append(" Your spare heart brought you back to life!" + "\n");
+				battleLog.append(" Your spare heart brought you back to life!" + "\n");
 				HP = maxHP;
 			}
 	}
 	else if(e.getSource() == useFreeze) {
-		log.append(" You freeze the enemies solid!" + "\n");
+		battleLog.append(" You freeze the enemies solid!" + "\n");
 		freezePotions--;
 		freezeActive = true;
 		if(freezePotions <= 0) {
