@@ -676,10 +676,10 @@ public void keyPressed(KeyEvent e) {
 	else if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 		JOptionPane.showMessageDialog(null, "You have " + freezePotions + " freeze potions and " + spareHearts + " spare hearts");
 	}
-	if(e.getKeyCode() == KeyEvent.VK_6) {
+	if(e.getKeyCode() == KeyEvent.VK_P) {
 		gamer = true;
 	}
-	if(e.getKeyCode() == KeyEvent.VK_9 && gamer) {
+	if(e.getKeyCode() == KeyEvent.VK_T && gamer) {
 		for(int i = 0; i < 45; i++) {
 			if(tiles[i].getBackground() == Color.green) {
 				tiles[i].setBackground(Color.white);
