@@ -5,8 +5,10 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.Random;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -47,8 +49,8 @@ public class Encounters implements ActionListener {
 	public JButton useFreeze;
 
 	
+	public int remainingGoblins = 0;
 	int goblinTiles = 12;
-	public int remainingGoblins = 12;
 	int dragonTile = 1;
 	int traderTile = 1;
 	int goldTiles = 5;
@@ -191,7 +193,7 @@ public class Encounters implements ActionListener {
 	
 	void getNewTraderLocation() {
 		Deadlocked.tiles[traderPosition].setBackground(Color.white);
-		Deadlocked.log.append("yeet" + "\n");
+		Deadlocked.tiles[traderPosition].setIcon(null);
 		int numberOfTraders = 0;
 		for(int i = 0; i <44; i++) {
 			if(Deadlocked.tiles[i].getBackground() == Color.PINK) {
@@ -200,7 +202,17 @@ public class Encounters implements ActionListener {
 					Deadlocked.tiles[i].setBackground(Color.white);
 					Deadlocked.tiles[i].setIcon(null);
 					numberOfTraders--;
-					Deadlocked.log.append("fat yeet" + "\n");
+				}
+				
+			}
+		}
+		for(int i = 0; i <44; i++) {
+			if(Deadlocked.tiles[i].getIcon() == getImageIcon(getClass().getResource("merchantSprite.png"))) {
+				numberOfTraders++;
+				if(numberOfTraders > 1) {
+					Deadlocked.tiles[i].setBackground(Color.white);
+					Deadlocked.tiles[i].setIcon(null);
+					numberOfTraders--;
 				}
 				
 			}
@@ -227,12 +239,20 @@ public class Encounters implements ActionListener {
 		}
 	}
 	
+	private Icon getImageIcon(URL resource) {
+		ImageIcon merchant =new ImageIcon(getClass().getResource("merchantSprite.png"));
+		Image ing = merchant.getImage();
+		Image newing = ing.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+		merchant = new ImageIcon(newing);
+
+		return merchant;
+	}
+
 	void getResource(int pos) {
 		if(Deadlocked.tiles[pos].getBackground() == Color.white) {
 			if(Deadlocked.goblinAmbush >= 5) {
 				JOptionPane.showMessageDialog(null, "You waited too long! The goblins ambush you" + "\n");
 				gerbleEncounter();
-				remainingGoblins++;
 			}
 		}
 		else if(Deadlocked.tiles[pos].getBackground() == Color.blue){
@@ -254,7 +274,6 @@ public class Encounters implements ActionListener {
 			if(Deadlocked.goblinAmbush >= 5) {
 				JOptionPane.showMessageDialog(null, "You waited too long! The goblins ambush you");
 				gerbleEncounter();
-				remainingGoblins++;
 			}
 		 }
 		 else if(Deadlocked.tiles[pos].getBackground() == Color.PINK){

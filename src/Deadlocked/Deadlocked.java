@@ -52,6 +52,9 @@ public class Deadlocked extends Player implements KeyListener  {
 	public static JTextArea log = new JTextArea(25, 130);
 	public static JScrollPane pain;
 	
+	public boolean goblinsDed = false;
+	public boolean goblinsAlive = true;
+	
 	
 	
 	//GameScreen Stuff End
@@ -162,11 +165,12 @@ public static void main(String [] args) {
 }
 @Override
 public void actionPerformed(ActionEvent e) {
+	remainingGoblins = 0;
 	//Final Boss Identifier
-	if(((JButton) e.getSource()).getBackground() == Color.red && remainingGoblins == 0) {
+	if(((JButton) e.getSource()).getBackground() == Color.red && goblinsDed) {
 		dragonEncounter();
 	}
-	else if(((JButton) e.getSource()).getBackground() == Color.red && remainingGoblins != 0) {
+	else if(((JButton) e.getSource()).getBackground() == Color.red && !goblinsDed) {
 		log.append(" You're not ready to move there yet. You must defeat all the goblins first." + "\n");
 	}
 	else {
@@ -180,7 +184,7 @@ public void actionPerformed(ActionEvent e) {
 			dragonHP = dragonHP-((AM*damage)-dragonAC);
 			battleLog.append(" You dealt: " + ((AM*damage)-dragonAC) + " damage." + "\n");
 			if(dragonHP <= 0) {
-				battleLog.append(" You killed the dragon! You win!" + "\n");
+				JOptionPane.showMessageDialog(null," You killed the dragon! You win!" + "\n");
 				String logTracker = battleLog.getText();
 				battleLog.setText("");
 				log.append(logTracker + "\n");
@@ -211,7 +215,7 @@ public void actionPerformed(ActionEvent e) {
 				freezeActive = false;
 				
 			if(HP <=0 && spareHearts <= 0) {
-					battleLog.append(" You died!" + "\n");
+					JOptionPane.showMessageDialog(null," You died!" + "\n");
 					map.dispose();
 					battleField.dispose();
 		}
@@ -222,7 +226,20 @@ public void actionPerformed(ActionEvent e) {
 	
 	if(turns <= 20) {
 		goblinD = 1;
-		goblinDTracker = goblinD;
+		goblinDTracker = 1;
+		if(AC >= 25) {
+			goblinD = 0;
+			goblinDTracker = 0;
+		}
+		else if(AC >= 19) {
+			goblinD= 0.5;
+			goblinDTracker = 0.5;
+		}
+		else if(AC >= 13) {
+			goblinD= 0.75;
+			goblinDTracker = 0.75;
+			
+		}
 	}
 	else if(turns > 20 ) {
 		if(!goblinsAreRestless) {
@@ -230,21 +247,20 @@ public void actionPerformed(ActionEvent e) {
 		goblinsAreRestless = true;
 		}
 		goblinD = 3;
-		goblinDTracker = goblinD;
-	}
-	
-	if(AC >= 25) {
-		goblinD = goblinD-1.5;
-		goblinDTracker = goblinD;
-	}
-	else if(AC >= 19) {
-		goblinD= goblinD-1;
-		goblinDTracker = goblinD;
-	}
-	else if(AC >= 13) {
-		goblinD= goblinD-0.5;
-		goblinDTracker = goblinD;
-		
+		goblinDTracker = 3;
+		if(AC >= 25) {
+			goblinD = 1.5;
+			goblinDTracker = 1.5;
+		}
+		else if(AC >= 19) {
+			goblinD= 2;
+			goblinDTracker = 2;
+		}
+		else if(AC >= 13) {
+			goblinD= 2.5;
+			goblinDTracker = 2.5;
+			
+		}
 	}
 	
 	if(e.getSource() == goblin1) {
@@ -266,10 +282,22 @@ public void actionPerformed(ActionEvent e) {
 				battleLog.setText("");
 				log.append(logTracker + "\n");
 				battleField.dispose();
-				remainingGoblins--;
-				if(remainingGoblins == 0) {
-					JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
+				for(int i = 0; i < 45; i++) {
+					if(tiles[i].getBackground() == Color.green) {
+						remainingGoblins++;
+					}
+					}
+				if(remainingGoblins <= 0) {
+					goblinsAlive = false;
+					}
+				else {
+					remainingGoblins = 0;
 				}
+					if(!goblinsAlive) {
+						goblinsDed = true;
+						JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
+				
+					}
 				battleLog.append(" You won!" + "\n");
 				randomDrop(2);
 				map.setVisible(true);
@@ -303,13 +331,25 @@ public void actionPerformed(ActionEvent e) {
 			randomDrop(1);
 			if(goblinCount == 0) {
 				battleField.dispose();
-				remainingGoblins--;
 				String logTracker = battleLog.getText();
 				battleLog.setText("");
 				log.append(logTracker + "\n");
-				if(remainingGoblins == 0) {
-					JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
+				for(int i = 0; i < 45; i++) {
+					if(tiles[i].getBackground() == Color.green) {
+						remainingGoblins++;
+					}
+					}
+				if(remainingGoblins <= 0) {
+					goblinsAlive = false;
+					}
+				else {
+					remainingGoblins = 0;
 				}
+					if(!goblinsAlive) {
+						goblinsDed = true;
+						JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
+				
+					}
 				battleLog.append(" You won!" + "\n");
 				randomDrop(2);
 				map.setVisible(true);
@@ -353,10 +393,22 @@ public void actionPerformed(ActionEvent e) {
 				battleLog.setText("");
 				log.append(logTracker + "\n");
 				battleField.dispose();
-				remainingGoblins--;
-				if(remainingGoblins == 0) {
-					JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
+				for(int i = 0; i < 45; i++) {
+					if(tiles[i].getBackground() == Color.green) {
+						remainingGoblins++;
+					}
+					}
+				if(remainingGoblins <= 0) {
+					goblinsAlive = false;
+					}
+				else {
+					remainingGoblins = 0;
 				}
+					if(!goblinsAlive) {
+						goblinsDed = true;
+						JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
+				
+					}
 				battleLog.append(" You won!" + "\n");
 				randomDrop(2);
 				map.setVisible(true);
@@ -399,10 +451,22 @@ public void actionPerformed(ActionEvent e) {
 				UI.remove(useFreeze);
 				}
 				battleField.dispose();
-				remainingGoblins--;
-				if(remainingGoblins == 0) {
-					JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
+				for(int i = 0; i < 45; i++) {
+					if(tiles[i].getBackground() == Color.green) {
+						remainingGoblins++;
+					}
+					}
+				if(remainingGoblins <= 0) {
+					goblinsAlive = false;
+					}
+				else {
+					remainingGoblins = 0;
 				}
+					if(!goblinsAlive) {
+						goblinsDed = true;
+						JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
+				
+					}
 				battleLog.append(" You won!" + "\n");
 				randomDrop(2);
 				map.setVisible(true);
@@ -442,11 +506,23 @@ public void actionPerformed(ActionEvent e) {
 				UI.remove(useFreeze);
 				}
 				battleField.dispose();
-				remainingGoblins--;
-				if(remainingGoblins == 0) {
-					JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
+				for(int i = 0; i < 45; i++) {
+					if(tiles[i].getBackground() == Color.green) {
+						remainingGoblins++;
+					}
+					}
+				if(remainingGoblins <= 0) {
+					goblinsAlive = false;
+					}
+				else {
+					remainingGoblins = 0;
 				}
-				battleLog.append(" You won!" + "\n");
+					if(!goblinsAlive) {
+						goblinsDed = true;
+						JOptionPane.showMessageDialog(null, "You have rid the world of goblins! You will no longer be ambushed! You are now ready to face the final boss.");
+				
+					}
+					battleLog.append(" You won!" + "\n");
 				randomDrop(2);
 				map.setVisible(true);
 			}
@@ -649,7 +725,7 @@ public void actionPerformed(ActionEvent e) {
 			log.append(" You can't move that far!" + "\n");
 		}
 	}
-	 if(remainingGoblins <= 0) {
+	 if(goblinsDed) {
 		 goblinAmbush = 0;
 	 }
 	}
@@ -657,7 +733,7 @@ public void actionPerformed(ActionEvent e) {
 		HP++;
 	}
 	 map.hasFocus();
-	
+	map.setTitle( "You have: " + gold + " gold, " + HP + " health, " + AC + " armor, " + damage + " attack, and a " + AM + " attack modifier");
 }
 
 
@@ -684,7 +760,6 @@ public void keyPressed(KeyEvent e) {
 			if(tiles[i].getBackground() == Color.green) {
 				tiles[i].setBackground(Color.white);
 			}
-			remainingGoblins = 0;
 
 		}
 		log.append(" Bazinga" + "\n");
