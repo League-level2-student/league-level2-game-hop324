@@ -175,12 +175,6 @@ public void actionPerformed(ActionEvent e) {
 	}
 	else {
 		if(e.getSource() == dragon) {
-			if(freezeActive) {
-				dragonD = 0;
-			}
-			else {
-				dragonD = 35;
-			}
 			dragonHP = dragonHP-((AM*damage)-dragonAC);
 			battleLog.append(" You dealt: " + ((AM*damage)-dragonAC) + " damage." + "\n");
 			if(dragonHP <= 0) {
@@ -191,6 +185,7 @@ public void actionPerformed(ActionEvent e) {
 				battleField.dispose();
 				map.dispose();
 				}
+			if(!freezeActive) {
 		Random DA = new Random();
 		int attack = DA.nextInt(4);
 			if(attack == 0) {
@@ -212,7 +207,8 @@ public void actionPerformed(ActionEvent e) {
 				battleLog.append(" The dragon covers it's scales in treasure to increase it's armor" + "\n");
 				dragonAC+=5;
 			}
-				freezeActive = false;
+			freezeActive = false;
+			}
 				
 			if(HP <=0 && spareHearts <= 0) {
 					JOptionPane.showMessageDialog(null," You died!" + "\n");

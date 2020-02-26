@@ -66,7 +66,7 @@ public class Encounters implements ActionListener {
 	
 	
 	public JButton dragon;
-	public double dragonHP = 1000;
+	public double dragonHP = 100;
 	public int dragonAC = 10;
 	public double dragonAM = 1.0;
 	public int dragonD = 35;
